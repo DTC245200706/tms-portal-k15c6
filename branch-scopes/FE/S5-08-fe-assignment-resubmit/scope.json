@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S5-08-fe-assignment-resubmit",
+  "team": "FE",
+  "storyId": "S5-08",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S5-08-fe-assignment-resubmit/feature.config.ts",
+    "frontend/src/features/S5-08-fe-assignment-resubmit/api.ts",
+    "frontend/src/features/S5-08-fe-assignment-resubmit/screen.tsx",
+    "branches/FE/S5-08-fe-assignment-resubmit/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
