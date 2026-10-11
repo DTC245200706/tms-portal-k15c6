@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S8-01-fe-grade-config",
+  "team": "FE",
+  "storyId": "S8-01",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S8-01-fe-grade-config/feature.config.ts",
+    "frontend/src/features/S8-01-fe-grade-config/api.ts",
+    "frontend/src/features/S8-01-fe-grade-config/screen.tsx",
+    "branches/FE/S8-01-fe-grade-config/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
