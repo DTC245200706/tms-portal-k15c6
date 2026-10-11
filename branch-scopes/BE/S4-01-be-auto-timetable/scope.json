@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S4-01-be-auto-timetable",
+  "team": "BE",
+  "storyId": "S4-01",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S4-01-be-auto-timetable/module.ts",
+    "backend/src/modules/S4-01-be-auto-timetable/controller.ts",
+    "backend/src/modules/S4-01-be-auto-timetable/service.ts",
+    "branches/BE/S4-01-be-auto-timetable/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
