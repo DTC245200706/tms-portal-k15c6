@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S6-04-be-student-feedback",
+  "team": "BE",
+  "storyId": "S6-04",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S6-04-be-student-feedback/module.ts",
+    "backend/src/modules/S6-04-be-student-feedback/controller.ts",
+    "backend/src/modules/S6-04-be-student-feedback/service.ts",
+    "branches/BE/S6-04-be-student-feedback/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
