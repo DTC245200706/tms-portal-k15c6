@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S8-05-be-quality-survey",
+  "team": "BE",
+  "storyId": "S8-05",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S8-05-be-quality-survey/module.ts",
+    "backend/src/modules/S8-05-be-quality-survey/controller.ts",
+    "backend/src/modules/S8-05-be-quality-survey/service.ts",
+    "branches/BE/S8-05-be-quality-survey/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
