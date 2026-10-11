@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S4-06-be-student-transfer",
+  "team": "BE",
+  "storyId": "S4-06",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S4-06-be-student-transfer/module.ts",
+    "backend/src/modules/S4-06-be-student-transfer/controller.ts",
+    "backend/src/modules/S4-06-be-student-transfer/service.ts",
+    "branches/BE/S4-06-be-student-transfer/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
