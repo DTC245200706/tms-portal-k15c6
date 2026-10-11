@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S5-07-be-assignment-submit",
+  "team": "BE",
+  "storyId": "S5-07",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S5-07-be-assignment-submit/module.ts",
+    "backend/src/modules/S5-07-be-assignment-submit/controller.ts",
+    "backend/src/modules/S5-07-be-assignment-submit/service.ts",
+    "branches/BE/S5-07-be-assignment-submit/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
