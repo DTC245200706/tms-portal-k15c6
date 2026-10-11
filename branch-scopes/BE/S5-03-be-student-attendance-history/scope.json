@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S5-03-be-student-attendance-history",
+  "team": "BE",
+  "storyId": "S5-03",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S5-03-be-student-attendance-history/module.ts",
+    "backend/src/modules/S5-03-be-student-attendance-history/controller.ts",
+    "backend/src/modules/S5-03-be-student-attendance-history/service.ts",
+    "branches/BE/S5-03-be-student-attendance-history/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
