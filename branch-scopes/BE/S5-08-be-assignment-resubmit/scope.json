@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S5-08-be-assignment-resubmit",
+  "team": "BE",
+  "storyId": "S5-08",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S5-08-be-assignment-resubmit/module.ts",
+    "backend/src/modules/S5-08-be-assignment-resubmit/controller.ts",
+    "backend/src/modules/S5-08-be-assignment-resubmit/service.ts",
+    "branches/BE/S5-08-be-assignment-resubmit/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
