@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S6-03-fe-request-resubmission",
+  "team": "FE",
+  "storyId": "S6-03",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S6-03-fe-request-resubmission/feature.config.ts",
+    "frontend/src/features/S6-03-fe-request-resubmission/api.ts",
+    "frontend/src/features/S6-03-fe-request-resubmission/screen.tsx",
+    "branches/FE/S6-03-fe-request-resubmission/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
