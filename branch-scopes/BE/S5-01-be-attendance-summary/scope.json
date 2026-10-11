@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S5-01-be-attendance-summary",
+  "team": "BE",
+  "storyId": "S5-01",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S5-01-be-attendance-summary/module.ts",
+    "backend/src/modules/S5-01-be-attendance-summary/controller.ts",
+    "backend/src/modules/S5-01-be-attendance-summary/service.ts",
+    "branches/BE/S5-01-be-attendance-summary/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
