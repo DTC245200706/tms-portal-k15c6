@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S8-03-fe-transcript-export",
+  "team": "FE",
+  "storyId": "S8-03",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S8-03-fe-transcript-export/feature.config.ts",
+    "frontend/src/features/S8-03-fe-transcript-export/api.ts",
+    "frontend/src/features/S8-03-fe-transcript-export/screen.tsx",
+    "branches/FE/S8-03-fe-transcript-export/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
