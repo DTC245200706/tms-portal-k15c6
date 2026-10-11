@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S5-05-be-assignment-create",
+  "team": "BE",
+  "storyId": "S5-05",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S5-05-be-assignment-create/module.ts",
+    "backend/src/modules/S5-05-be-assignment-create/controller.ts",
+    "backend/src/modules/S5-05-be-assignment-create/service.ts",
+    "branches/BE/S5-05-be-assignment-create/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
