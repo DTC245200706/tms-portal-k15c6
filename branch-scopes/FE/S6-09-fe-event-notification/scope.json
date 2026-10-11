@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S6-09-fe-event-notification",
+  "team": "FE",
+  "storyId": "S6-09",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S6-09-fe-event-notification/feature.config.ts",
+    "frontend/src/features/S6-09-fe-event-notification/api.ts",
+    "frontend/src/features/S6-09-fe-event-notification/screen.tsx",
+    "branches/FE/S6-09-fe-event-notification/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
