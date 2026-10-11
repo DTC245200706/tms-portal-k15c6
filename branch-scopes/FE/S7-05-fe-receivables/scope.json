@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S7-05-fe-receivables",
+  "team": "FE",
+  "storyId": "S7-05",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S7-05-fe-receivables/feature.config.ts",
+    "frontend/src/features/S7-05-fe-receivables/api.ts",
+    "frontend/src/features/S7-05-fe-receivables/screen.tsx",
+    "branches/FE/S7-05-fe-receivables/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
