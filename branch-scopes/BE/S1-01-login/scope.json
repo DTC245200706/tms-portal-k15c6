@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S1-01-login",
+  "team": "BE",
+  "storyId": "S1-01",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S1-01-login/module.ts",
+    "backend/src/modules/S1-01-login/controller.ts",
+    "backend/src/modules/S1-01-login/service.ts",
+    "branches/BE/S1-01-login/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
