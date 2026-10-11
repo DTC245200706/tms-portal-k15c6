@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S5-02-be-attendance-alert",
+  "team": "BE",
+  "storyId": "S5-02",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S5-02-be-attendance-alert/module.ts",
+    "backend/src/modules/S5-02-be-attendance-alert/controller.ts",
+    "backend/src/modules/S5-02-be-attendance-alert/service.ts",
+    "branches/BE/S5-02-be-attendance-alert/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
