@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S6-07-fe-class-announcement",
+  "team": "FE",
+  "storyId": "S6-07",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S6-07-fe-class-announcement/feature.config.ts",
+    "frontend/src/features/S6-07-fe-class-announcement/api.ts",
+    "frontend/src/features/S6-07-fe-class-announcement/screen.tsx",
+    "branches/FE/S6-07-fe-class-announcement/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
