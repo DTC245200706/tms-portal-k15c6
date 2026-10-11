@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S6-08-fe-session-reminder",
+  "team": "FE",
+  "storyId": "S6-08",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S6-08-fe-session-reminder/feature.config.ts",
+    "frontend/src/features/S6-08-fe-session-reminder/api.ts",
+    "frontend/src/features/S6-08-fe-session-reminder/screen.tsx",
+    "branches/FE/S6-08-fe-session-reminder/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
