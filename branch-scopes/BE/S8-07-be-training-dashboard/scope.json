@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S8-07-be-training-dashboard",
+  "team": "BE",
+  "storyId": "S8-07",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S8-07-be-training-dashboard/module.ts",
+    "backend/src/modules/S8-07-be-training-dashboard/controller.ts",
+    "backend/src/modules/S8-07-be-training-dashboard/service.ts",
+    "branches/BE/S8-07-be-training-dashboard/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
