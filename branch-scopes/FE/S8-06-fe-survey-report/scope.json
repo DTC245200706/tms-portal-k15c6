@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S8-06-fe-survey-report",
+  "team": "FE",
+  "storyId": "S8-06",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S8-06-fe-survey-report/feature.config.ts",
+    "frontend/src/features/S8-06-fe-survey-report/api.ts",
+    "frontend/src/features/S8-06-fe-survey-report/screen.tsx",
+    "branches/FE/S8-06-fe-survey-report/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
