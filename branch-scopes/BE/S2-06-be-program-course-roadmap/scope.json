@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S2-06-be-program-course-roadmap",
+  "team": "BE",
+  "storyId": "S2-06",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S2-06-be-program-course-roadmap/module.ts",
+    "backend/src/modules/S2-06-be-program-course-roadmap/controller.ts",
+    "backend/src/modules/S2-06-be-program-course-roadmap/service.ts",
+    "branches/BE/S2-06-be-program-course-roadmap/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
