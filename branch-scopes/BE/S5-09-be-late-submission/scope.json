@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S5-09-be-late-submission",
+  "team": "BE",
+  "storyId": "S5-09",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S5-09-be-late-submission/module.ts",
+    "backend/src/modules/S5-09-be-late-submission/controller.ts",
+    "backend/src/modules/S5-09-be-late-submission/service.ts",
+    "branches/BE/S5-09-be-late-submission/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
