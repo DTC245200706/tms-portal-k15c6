@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S4-07-fe-attendance-marking",
+  "team": "FE",
+  "storyId": "S4-07",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S4-07-fe-attendance-marking/feature.config.ts",
+    "frontend/src/features/S4-07-fe-attendance-marking/api.ts",
+    "frontend/src/features/S4-07-fe-attendance-marking/screen.tsx",
+    "branches/FE/S4-07-fe-attendance-marking/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
