@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S4-08-be-leave-request",
+  "team": "BE",
+  "storyId": "S4-08",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S4-08-be-leave-request/module.ts",
+    "backend/src/modules/S4-08-be-leave-request/controller.ts",
+    "backend/src/modules/S4-08-be-leave-request/service.ts",
+    "branches/BE/S4-08-be-leave-request/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
