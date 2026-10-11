@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S7-07-be-student-fee-status",
+  "team": "BE",
+  "storyId": "S7-07",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S7-07-be-student-fee-status/module.ts",
+    "backend/src/modules/S7-07-be-student-fee-status/controller.ts",
+    "backend/src/modules/S7-07-be-student-fee-status/service.ts",
+    "branches/BE/S7-07-be-student-fee-status/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
