@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S6-05-fe-learning-material-upload",
+  "team": "FE",
+  "storyId": "S6-05",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S6-05-fe-learning-material-upload/feature.config.ts",
+    "frontend/src/features/S6-05-fe-learning-material-upload/api.ts",
+    "frontend/src/features/S6-05-fe-learning-material-upload/screen.tsx",
+    "branches/FE/S6-05-fe-learning-material-upload/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
