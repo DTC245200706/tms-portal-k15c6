@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S6-09-be-event-notification",
+  "team": "BE",
+  "storyId": "S6-09",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S6-09-be-event-notification/module.ts",
+    "backend/src/modules/S6-09-be-event-notification/controller.ts",
+    "backend/src/modules/S6-09-be-event-notification/service.ts",
+    "branches/BE/S6-09-be-event-notification/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
