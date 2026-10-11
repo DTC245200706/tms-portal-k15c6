@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S8-05-fe-quality-survey",
+  "team": "FE",
+  "storyId": "S8-05",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S8-05-fe-quality-survey/feature.config.ts",
+    "frontend/src/features/S8-05-fe-quality-survey/api.ts",
+    "frontend/src/features/S8-05-fe-quality-survey/screen.tsx",
+    "branches/FE/S8-05-fe-quality-survey/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
