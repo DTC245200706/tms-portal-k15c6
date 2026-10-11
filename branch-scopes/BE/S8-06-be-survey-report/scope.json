@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S8-06-be-survey-report",
+  "team": "BE",
+  "storyId": "S8-06",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S8-06-be-survey-report/module.ts",
+    "backend/src/modules/S8-06-be-survey-report/controller.ts",
+    "backend/src/modules/S8-06-be-survey-report/service.ts",
+    "branches/BE/S8-06-be-survey-report/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
