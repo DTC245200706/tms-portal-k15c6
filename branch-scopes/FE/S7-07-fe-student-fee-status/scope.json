@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S7-07-fe-student-fee-status",
+  "team": "FE",
+  "storyId": "S7-07",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S7-07-fe-student-fee-status/feature.config.ts",
+    "frontend/src/features/S7-07-fe-student-fee-status/api.ts",
+    "frontend/src/features/S7-07-fe-student-fee-status/screen.tsx",
+    "branches/FE/S7-07-fe-student-fee-status/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
