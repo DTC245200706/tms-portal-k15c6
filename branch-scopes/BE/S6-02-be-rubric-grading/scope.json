@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S6-02-be-rubric-grading",
+  "team": "BE",
+  "storyId": "S6-02",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S6-02-be-rubric-grading/module.ts",
+    "backend/src/modules/S6-02-be-rubric-grading/controller.ts",
+    "backend/src/modules/S6-02-be-rubric-grading/service.ts",
+    "branches/BE/S6-02-be-rubric-grading/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
