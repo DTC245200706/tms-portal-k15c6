@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S7-08-fe-revenue-report",
+  "team": "FE",
+  "storyId": "S7-08",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S7-08-fe-revenue-report/feature.config.ts",
+    "frontend/src/features/S7-08-fe-revenue-report/api.ts",
+    "frontend/src/features/S7-08-fe-revenue-report/screen.tsx",
+    "branches/FE/S7-08-fe-revenue-report/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
