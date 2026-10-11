@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S5-04-fe-attendance-export",
+  "team": "FE",
+  "storyId": "S5-04",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S5-04-fe-attendance-export/feature.config.ts",
+    "frontend/src/features/S5-04-fe-attendance-export/api.ts",
+    "frontend/src/features/S5-04-fe-attendance-export/screen.tsx",
+    "branches/FE/S5-04-fe-attendance-export/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
