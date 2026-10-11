@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S8-04-fe-graduation-eligibility",
+  "team": "FE",
+  "storyId": "S8-04",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S8-04-fe-graduation-eligibility/feature.config.ts",
+    "frontend/src/features/S8-04-fe-graduation-eligibility/api.ts",
+    "frontend/src/features/S8-04-fe-graduation-eligibility/screen.tsx",
+    "branches/FE/S8-04-fe-graduation-eligibility/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
