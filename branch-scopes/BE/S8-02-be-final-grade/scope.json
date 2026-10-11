@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S8-02-be-final-grade",
+  "team": "BE",
+  "storyId": "S8-02",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S8-02-be-final-grade/module.ts",
+    "backend/src/modules/S8-02-be-final-grade/controller.ts",
+    "backend/src/modules/S8-02-be-final-grade/service.ts",
+    "branches/BE/S8-02-be-final-grade/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
