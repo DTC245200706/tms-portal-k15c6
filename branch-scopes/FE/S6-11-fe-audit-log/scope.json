@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S6-11-fe-audit-log",
+  "team": "FE",
+  "storyId": "S6-11",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S6-11-fe-audit-log/feature.config.ts",
+    "frontend/src/features/S6-11-fe-audit-log/api.ts",
+    "frontend/src/features/S6-11-fe-audit-log/screen.tsx",
+    "branches/FE/S6-11-fe-audit-log/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
