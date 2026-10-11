@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S7-08-be-revenue-report",
+  "team": "BE",
+  "storyId": "S7-08",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S7-08-be-revenue-report/module.ts",
+    "backend/src/modules/S7-08-be-revenue-report/controller.ts",
+    "backend/src/modules/S7-08-be-revenue-report/service.ts",
+    "branches/BE/S7-08-be-revenue-report/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
