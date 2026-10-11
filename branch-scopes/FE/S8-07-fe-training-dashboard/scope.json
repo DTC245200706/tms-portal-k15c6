@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S8-07-fe-training-dashboard",
+  "team": "FE",
+  "storyId": "S8-07",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S8-07-fe-training-dashboard/feature.config.ts",
+    "frontend/src/features/S8-07-fe-training-dashboard/api.ts",
+    "frontend/src/features/S8-07-fe-training-dashboard/screen.tsx",
+    "branches/FE/S8-07-fe-training-dashboard/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
