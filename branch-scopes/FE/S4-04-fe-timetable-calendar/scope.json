@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S4-04-fe-timetable-calendar",
+  "team": "FE",
+  "storyId": "S4-04",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S4-04-fe-timetable-calendar/feature.config.ts",
+    "frontend/src/features/S4-04-fe-timetable-calendar/api.ts",
+    "frontend/src/features/S4-04-fe-timetable-calendar/screen.tsx",
+    "branches/FE/S4-04-fe-timetable-calendar/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
