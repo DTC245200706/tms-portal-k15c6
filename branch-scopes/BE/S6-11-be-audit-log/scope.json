@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S6-11-be-audit-log",
+  "team": "BE",
+  "storyId": "S6-11",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S6-11-be-audit-log/module.ts",
+    "backend/src/modules/S6-11-be-audit-log/controller.ts",
+    "backend/src/modules/S6-11-be-audit-log/service.ts",
+    "branches/BE/S6-11-be-audit-log/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
