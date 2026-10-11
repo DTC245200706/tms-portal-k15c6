@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S4-05-fe-student-schedule",
+  "team": "FE",
+  "storyId": "S4-05",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S4-05-fe-student-schedule/feature.config.ts",
+    "frontend/src/features/S4-05-fe-student-schedule/api.ts",
+    "frontend/src/features/S4-05-fe-student-schedule/screen.tsx",
+    "branches/FE/S4-05-fe-student-schedule/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
