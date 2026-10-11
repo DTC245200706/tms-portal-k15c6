@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S7-05-be-receivables",
+  "team": "BE",
+  "storyId": "S7-05",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S7-05-be-receivables/module.ts",
+    "backend/src/modules/S7-05-be-receivables/controller.ts",
+    "backend/src/modules/S7-05-be-receivables/service.ts",
+    "branches/BE/S7-05-be-receivables/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
