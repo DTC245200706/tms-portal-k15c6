@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S5-10-fe-submission-review",
+  "team": "FE",
+  "storyId": "S5-10",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S5-10-fe-submission-review/feature.config.ts",
+    "frontend/src/features/S5-10-fe-submission-review/api.ts",
+    "frontend/src/features/S5-10-fe-submission-review/screen.tsx",
+    "branches/FE/S5-10-fe-submission-review/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
