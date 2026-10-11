@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S6-01-be-grade-submission",
+  "team": "BE",
+  "storyId": "S6-01",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S6-01-be-grade-submission/module.ts",
+    "backend/src/modules/S6-01-be-grade-submission/controller.ts",
+    "backend/src/modules/S6-01-be-grade-submission/service.ts",
+    "branches/BE/S6-01-be-grade-submission/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
