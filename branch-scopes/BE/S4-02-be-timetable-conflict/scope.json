@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S4-02-be-timetable-conflict",
+  "team": "BE",
+  "storyId": "S4-02",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S4-02-be-timetable-conflict/module.ts",
+    "backend/src/modules/S4-02-be-timetable-conflict/controller.ts",
+    "backend/src/modules/S4-02-be-timetable-conflict/service.ts",
+    "branches/BE/S4-02-be-timetable-conflict/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
