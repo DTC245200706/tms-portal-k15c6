@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S1-03-password-reset",
+  "team": "BE",
+  "storyId": "S1-03",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S1-03-password-reset/module.ts",
+    "backend/src/modules/S1-03-password-reset/controller.ts",
+    "backend/src/modules/S1-03-password-reset/service.ts",
+    "branches/BE/S1-03-password-reset/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
