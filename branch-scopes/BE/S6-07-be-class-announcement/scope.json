@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S6-07-be-class-announcement",
+  "team": "BE",
+  "storyId": "S6-07",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S6-07-be-class-announcement/module.ts",
+    "backend/src/modules/S6-07-be-class-announcement/controller.ts",
+    "backend/src/modules/S6-07-be-class-announcement/service.ts",
+    "branches/BE/S6-07-be-class-announcement/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
