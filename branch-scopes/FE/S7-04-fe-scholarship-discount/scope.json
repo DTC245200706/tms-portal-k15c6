@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S7-04-fe-scholarship-discount",
+  "team": "FE",
+  "storyId": "S7-04",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S7-04-fe-scholarship-discount/feature.config.ts",
+    "frontend/src/features/S7-04-fe-scholarship-discount/api.ts",
+    "frontend/src/features/S7-04-fe-scholarship-discount/screen.tsx",
+    "branches/FE/S7-04-fe-scholarship-discount/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
