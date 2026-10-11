@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S1-06-permission-based-navigation-menu",
+  "team": "BE",
+  "storyId": "S1-06",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S1-06-permission-based-navigation-menu/module.ts",
+    "backend/src/modules/S1-06-permission-based-navigation-menu/controller.ts",
+    "backend/src/modules/S1-06-permission-based-navigation-menu/service.ts",
+    "branches/BE/S1-06-permission-based-navigation-menu/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
