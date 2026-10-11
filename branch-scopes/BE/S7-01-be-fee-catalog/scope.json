@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S7-01-be-fee-catalog",
+  "team": "BE",
+  "storyId": "S7-01",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S7-01-be-fee-catalog/module.ts",
+    "backend/src/modules/S7-01-be-fee-catalog/controller.ts",
+    "backend/src/modules/S7-01-be-fee-catalog/service.ts",
+    "branches/BE/S7-01-be-fee-catalog/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
