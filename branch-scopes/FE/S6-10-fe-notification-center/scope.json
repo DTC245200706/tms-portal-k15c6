@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S6-10-fe-notification-center",
+  "team": "FE",
+  "storyId": "S6-10",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S6-10-fe-notification-center/feature.config.ts",
+    "frontend/src/features/S6-10-fe-notification-center/api.ts",
+    "frontend/src/features/S6-10-fe-notification-center/screen.tsx",
+    "branches/FE/S6-10-fe-notification-center/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
