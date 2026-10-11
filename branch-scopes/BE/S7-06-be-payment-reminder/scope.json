@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S7-06-be-payment-reminder",
+  "team": "BE",
+  "storyId": "S7-06",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S7-06-be-payment-reminder/module.ts",
+    "backend/src/modules/S7-06-be-payment-reminder/controller.ts",
+    "backend/src/modules/S7-06-be-payment-reminder/service.ts",
+    "branches/BE/S7-06-be-payment-reminder/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
