@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S3-07-be-class-list",
+  "team": "BE",
+  "storyId": "S3-07",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S3-07-be-class-list/module.ts",
+    "backend/src/modules/S3-07-be-class-list/controller.ts",
+    "backend/src/modules/S3-07-be-class-list/service.ts",
+    "branches/BE/S3-07-be-class-list/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
