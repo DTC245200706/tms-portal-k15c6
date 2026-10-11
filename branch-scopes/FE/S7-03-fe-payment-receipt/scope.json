@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S7-03-fe-payment-receipt",
+  "team": "FE",
+  "storyId": "S7-03",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S7-03-fe-payment-receipt/feature.config.ts",
+    "frontend/src/features/S7-03-fe-payment-receipt/api.ts",
+    "frontend/src/features/S7-03-fe-payment-receipt/screen.tsx",
+    "branches/FE/S7-03-fe-payment-receipt/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
