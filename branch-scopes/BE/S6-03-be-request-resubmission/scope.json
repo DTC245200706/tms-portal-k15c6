@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S6-03-be-request-resubmission",
+  "team": "BE",
+  "storyId": "S6-03",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S6-03-be-request-resubmission/module.ts",
+    "backend/src/modules/S6-03-be-request-resubmission/controller.ts",
+    "backend/src/modules/S6-03-be-request-resubmission/service.ts",
+    "branches/BE/S6-03-be-request-resubmission/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
