@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S8-03-be-transcript-export",
+  "team": "BE",
+  "storyId": "S8-03",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S8-03-be-transcript-export/module.ts",
+    "backend/src/modules/S8-03-be-transcript-export/controller.ts",
+    "backend/src/modules/S8-03-be-transcript-export/service.ts",
+    "branches/BE/S8-03-be-transcript-export/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
