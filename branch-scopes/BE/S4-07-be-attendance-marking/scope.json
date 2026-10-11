@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S4-07-be-attendance-marking",
+  "team": "BE",
+  "storyId": "S4-07",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S4-07-be-attendance-marking/module.ts",
+    "backend/src/modules/S4-07-be-attendance-marking/controller.ts",
+    "backend/src/modules/S4-07-be-attendance-marking/service.ts",
+    "branches/BE/S4-07-be-attendance-marking/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
