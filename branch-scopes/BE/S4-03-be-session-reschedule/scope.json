@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S4-03-be-session-reschedule",
+  "team": "BE",
+  "storyId": "S4-03",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S4-03-be-session-reschedule/module.ts",
+    "backend/src/modules/S4-03-be-session-reschedule/controller.ts",
+    "backend/src/modules/S4-03-be-session-reschedule/service.ts",
+    "branches/BE/S4-03-be-session-reschedule/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
