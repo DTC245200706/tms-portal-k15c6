@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S6-10-be-notification-center",
+  "team": "BE",
+  "storyId": "S6-10",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S6-10-be-notification-center/module.ts",
+    "backend/src/modules/S6-10-be-notification-center/controller.ts",
+    "backend/src/modules/S6-10-be-notification-center/service.ts",
+    "branches/BE/S6-10-be-notification-center/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
