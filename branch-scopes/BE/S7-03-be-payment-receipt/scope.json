@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S7-03-be-payment-receipt",
+  "team": "BE",
+  "storyId": "S7-03",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S7-03-be-payment-receipt/module.ts",
+    "backend/src/modules/S7-03-be-payment-receipt/controller.ts",
+    "backend/src/modules/S7-03-be-payment-receipt/service.ts",
+    "branches/BE/S7-03-be-payment-receipt/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
