@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S7-06-fe-payment-reminder",
+  "team": "FE",
+  "storyId": "S7-06",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S7-06-fe-payment-reminder/feature.config.ts",
+    "frontend/src/features/S7-06-fe-payment-reminder/api.ts",
+    "frontend/src/features/S7-06-fe-payment-reminder/screen.tsx",
+    "branches/FE/S7-06-fe-payment-reminder/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
