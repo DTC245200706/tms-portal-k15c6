@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S4-08-fe-leave-request",
+  "team": "FE",
+  "storyId": "S4-08",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "frontend/src/features/S4-08-fe-leave-request/feature.config.ts",
+    "frontend/src/features/S4-08-fe-leave-request/api.ts",
+    "frontend/src/features/S4-08-fe-leave-request/screen.tsx",
+    "branches/FE/S4-08-fe-leave-request/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
