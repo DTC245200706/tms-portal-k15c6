@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S5-04-be-attendance-export",
+  "team": "BE",
+  "storyId": "S5-04",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S5-04-be-attendance-export/module.ts",
+    "backend/src/modules/S5-04-be-attendance-export/controller.ts",
+    "backend/src/modules/S5-04-be-attendance-export/service.ts",
+    "branches/BE/S5-04-be-attendance-export/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
