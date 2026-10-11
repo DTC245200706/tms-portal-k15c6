@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S8-04-be-graduation-eligibility",
+  "team": "BE",
+  "storyId": "S8-04",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S8-04-be-graduation-eligibility/module.ts",
+    "backend/src/modules/S8-04-be-graduation-eligibility/controller.ts",
+    "backend/src/modules/S8-04-be-graduation-eligibility/service.ts",
+    "branches/BE/S8-04-be-graduation-eligibility/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
