@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S5-06-be-assignment-list",
+  "team": "BE",
+  "storyId": "S5-06",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S5-06-be-assignment-list/module.ts",
+    "backend/src/modules/S5-06-be-assignment-list/controller.ts",
+    "backend/src/modules/S5-06-be-assignment-list/service.ts",
+    "branches/BE/S5-06-be-assignment-list/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
