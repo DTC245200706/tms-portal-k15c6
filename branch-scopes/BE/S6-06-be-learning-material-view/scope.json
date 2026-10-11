@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S6-06-be-learning-material-view",
+  "team": "BE",
+  "storyId": "S6-06",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S6-06-be-learning-material-view/module.ts",
+    "backend/src/modules/S6-06-be-learning-material-view/controller.ts",
+    "backend/src/modules/S6-06-be-learning-material-view/service.ts",
+    "branches/BE/S6-06-be-learning-material-view/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
