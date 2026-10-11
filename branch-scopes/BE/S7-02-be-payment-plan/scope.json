@@ -1,0 +1,13 @@
+{
+  "branch": "feature/S7-02-be-payment-plan",
+  "team": "BE",
+  "storyId": "S7-02",
+  "baseBranch": "develop",
+  "scopeFiles": [
+    "backend/src/modules/S7-02-be-payment-plan/module.ts",
+    "backend/src/modules/S7-02-be-payment-plan/controller.ts",
+    "backend/src/modules/S7-02-be-payment-plan/service.ts",
+    "branches/BE/S7-02-be-payment-plan/README.md"
+  ],
+  "integration": "Open PR into develop; require at least one reviewer approval."
+}
