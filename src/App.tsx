@@ -110,6 +110,8 @@ const leads: Lead[] = [
   { name: 'Trần Gia Huy', program: 'Data Analyst', source: 'Landing page', owner: 'Minh Phạm', age: '1 giờ', status: 'Đang tư vấn', tone: 'violet' },
   { name: 'Lê Hoàng Yến', program: 'Full-stack K15', source: 'Giới thiệu', owner: 'Linh Trần', age: '3 giờ', status: 'Hẹn học thử', tone: 'yellow' },
   { name: 'Phạm Quốc Bảo', program: 'UI/UX Foundation', source: 'Google', owner: 'Minh Phạm', age: 'Hôm qua', status: 'Đã liên hệ', tone: 'mint' },
+  { name: 'Vũ Khánh Linh', program: 'Product Management', source: 'Workshop tháng 10', owner: 'Minh Phạm', age: 'Hôm qua', status: 'Mới', tone: 'blue' },
+  { name: 'Đỗ Đức Anh', program: 'Full-stack K15', source: 'Zalo OA', owner: 'Linh Trần', age: '2 ngày', status: 'Đã liên hệ', tone: 'mint' },
 ]
 
 const classRows: ClassRow[] = [
@@ -117,18 +119,21 @@ const classRows: ClassRow[] = [
   { code: 'DA-K02', name: 'Data Analyst Foundation', instructor: 'Trần Minh Quân', progress: 42, students: '18 / 24', status: 'Đang học', tone: 'mint' },
   { code: 'UX-K08', name: 'UI/UX Product Design', instructor: 'Phạm Ngọc Hà', progress: 16, students: '21 / 25', status: 'Chuẩn bị', tone: 'yellow' },
   { code: 'FS-K14C4', name: 'Full-stack Web Developer', instructor: 'Lê Anh Tuấn', progress: 100, students: '26 / 26', status: 'Kết thúc', tone: 'blue' },
+  { code: 'PM-K03', name: 'Product Management Essentials', instructor: 'Nguyễn Thảo Vy', progress: 8, students: '15 / 20', status: 'Chuẩn bị', tone: 'violet' },
 ]
 
 const sessions = [
   { time: '08:30', title: 'React State & Data Flow', className: 'FS-K15C6', room: 'Lab 03', person: 'Nguyễn Hoàng Long', tone: 'violet' as StatusTone },
   { time: '13:30', title: 'SQL Window Functions', className: 'DA-K02', room: 'Phòng 204', person: 'Trần Minh Quân', tone: 'mint' as StatusTone },
   { time: '18:30', title: 'Design System Workshop', className: 'UX-K08', room: 'Online · Zoom', person: 'Phạm Ngọc Hà', tone: 'yellow' as StatusTone },
+  { time: '19:00', title: 'Product Discovery Sprint', className: 'PM-K03', room: 'Phòng 301', person: 'Nguyễn Thảo Vy', tone: 'blue' as StatusTone },
 ]
 
 const tasks = [
   { title: 'Chấm bài Sprint 04', detail: 'FS-K15C6 · 7 bài chưa chấm', due: 'Hôm nay, 17:00', tone: 'coral' as StatusTone },
   { title: 'Duyệt đơn xin vắng', detail: '3 đơn chờ xử lý', due: 'Cần xử lý', tone: 'yellow' as StatusTone },
   { title: 'Gửi lịch khai giảng', detail: 'UX-K08 · 25 học viên', due: 'Ngày mai', tone: 'mint' as StatusTone },
+  { title: 'Xác nhận phòng học PM-K03', detail: 'Phòng 301 · 15 học viên', due: 'Ngày mai', tone: 'violet' as StatusTone },
 ]
 
 const attendanceRows = [
@@ -136,12 +141,14 @@ const attendanceRows = [
   { name: 'Trần Gia Huy', code: 'HV-24042', sessions: '11 / 15', rate: 73, flag: 'Theo dõi', tone: 'yellow' as StatusTone },
   { name: 'Phạm Quốc Bảo', code: 'HV-24018', sessions: '9 / 15', rate: 60, flag: 'Rủi ro cao', tone: 'coral' as StatusTone },
   { name: 'Lê Hoàng Yến', code: 'HV-24037', sessions: '15 / 15', rate: 100, flag: 'Ổn định', tone: 'mint' as StatusTone },
+  { name: 'Vũ Khánh Linh', code: 'HV-24051', sessions: '12 / 15', rate: 80, flag: 'Theo dõi', tone: 'yellow' as StatusTone },
 ]
 
 const invoices = [
   { name: 'Nguyễn Minh Anh', className: 'FS-K15C6', amount: '18.500.000 đ', paid: '12.000.000 đ', due: '6.500.000 đ', status: 'Còn 2 ngày', tone: 'yellow' as StatusTone },
   { name: 'Trần Gia Huy', className: 'DA-K02', amount: '16.000.000 đ', paid: '16.000.000 đ', due: '0 đ', status: 'Đã hoàn tất', tone: 'mint' as StatusTone },
   { name: 'Phạm Quốc Bảo', className: 'FS-K15C6', amount: '18.500.000 đ', paid: '6.000.000 đ', due: '12.500.000 đ', status: 'Quá hạn 4 ngày', tone: 'coral' as StatusTone },
+  { name: 'Vũ Khánh Linh', className: 'PM-K03', amount: '14.000.000 đ', paid: '7.000.000 đ', due: '7.000.000 đ', status: 'Còn 7 ngày', tone: 'violet' as StatusTone },
 ]
 
 const formatCurrency = (value: number) => `${new Intl.NumberFormat('vi-VN').format(value)} đ`
