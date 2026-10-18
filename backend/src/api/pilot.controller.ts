@@ -22,6 +22,7 @@ export class PilotController {
 
   @Post('/programs')
   async createProgram(@Body() body: { code: string; name: string; durationSessions: number; fee?: number; description?: string }) {
+    if (!body.code?.trim() || !body.name?.trim() || !Number(body.durationSessions)) return { error: 'INVALID_PROGRAM', message: 'Mã, tên và số buổi chương trình là bắt buộc' }
     const result = await this.db.query(`INSERT INTO programs(code,name,description,duration_sessions,standard_fee) VALUES($1,$2,$3,$4,$5) RETURNING *`, [body.code, body.name, body.description ?? null, body.durationSessions, body.fee ?? 0])
     return { data: result.rows[0] }
   }
@@ -31,6 +32,7 @@ export class PilotController {
 
   @Post('/courses')
   async createCourse(@Body() body: { code: string; name: string; sessionsCount: number; weight?: number; learningOutcomes?: string }) {
+    if (!body.code?.trim() || !body.name?.trim() || !Number(body.sessionsCount)) return { error: 'INVALID_COURSE', message: 'Mã, tên và số buổi khóa học là bắt buộc' }
     const result = await this.db.query(`INSERT INTO courses(code,name,sessions_count,weight,learning_outcomes) VALUES($1,$2,$3,$4,$5) RETURNING *`, [body.code, body.name, body.sessionsCount, body.weight ?? 100, body.learningOutcomes ?? null])
     return { data: result.rows[0] }
   }
@@ -40,6 +42,11 @@ export class PilotController {
 
   @Post('/leads')
   async createLead(@Body() body: { name: string; phone: string; email?: string; programCode?: string; source?: string }) {
+    if (!body.name?.trim() || !body.phone?.trim()) return { error: 'INVALID_LEAD', message: 'Họ tên và số điện thoại là bắt buộc' }
+    if (body.programCode) {
+      const program = await this.db.query(`SELECT id FROM programs WHERE code=$1`, [body.programCode.trim()])
+      if (!program.rowCount) return { error: 'PROGRAM_NOT_FOUND', message: `Không tìm thấy chương trình ${body.programCode}` }
+    }
     const result = await this.db.query(`INSERT INTO leads(full_name,phone,email,source,interested_program_id) VALUES($1,$2,$3,$4,(SELECT id FROM programs WHERE code=$5)) RETURNING id, full_name AS name, phone, email, source, status, created_at AS "createdAt"`, [body.name, body.phone, body.email ?? null, body.source ?? 'Website', body.programCode ?? null])
     return { data: result.rows[0], message: 'Đã tạo lead ở trạng thái NEW' }
   }
@@ -55,6 +62,9 @@ export class PilotController {
 
   @Post('/classes')
   async createClass(@Body() body: { code: string; programCode: string; startDate?: string; capacity?: number; deliveryMode?: string }) {
+    if (!body.code?.trim() || !body.programCode?.trim()) return { error: 'INVALID_CLASS', message: 'Mã lớp và mã chương trình là bắt buộc' }
+    const program = await this.db.query(`SELECT id FROM programs WHERE code=$1`, [body.programCode.trim()])
+    if (!program.rowCount) return { error: 'PROGRAM_NOT_FOUND', message: `Không tìm thấy chương trình ${body.programCode}` }
     const result = await this.db.query(`INSERT INTO classes(code,program_id,expected_start_date,max_students,delivery_mode) VALUES($1,(SELECT id FROM programs WHERE code=$2),$3,$4,$5) RETURNING *`, [body.code, body.programCode, body.startDate ?? null, body.capacity ?? 25, body.deliveryMode ?? 'ONSITE'])
     return { data: result.rows[0] }
   }
@@ -126,6 +136,13 @@ export class PilotController {
 
   @Get('/notifications')
   async listNotifications() { const result = await this.db.query<{ readAt: string | null }>(`SELECT id,type,title,body,target_path AS "targetPath",read_at AS "readAt",created_at AS "createdAt" FROM notifications ORDER BY created_at DESC`); return { data: result.rows, unread: result.rows.filter((item) => !item.readAt).length } }
+
+  @Post('/notifications')
+  async createNotification(@Body() body: { title: string; message: string; targetPath?: string }) {
+    if (!body.title?.trim() || !body.message?.trim()) return { error: 'INVALID_NOTIFICATION', message: 'Tiêu đề và nội dung thông báo là bắt buộc' }
+    const result = await this.db.query(`INSERT INTO notifications(user_id,type,title,body,target_path) SELECT id,'ANNOUNCEMENT',$1,$2,$3 FROM users WHERE status='ACTIVE' RETURNING id`, [body.title.trim(), body.message.trim(), body.targetPath ?? null])
+    return { message: `Đã gửi thông báo tới ${result.rowCount} tài khoản`, sent: result.rowCount }
+  }
 
   @Patch('/notifications/:id/read')
   async markNotificationRead(@Param('id') id: string) { const result = await this.db.query(`UPDATE notifications SET read_at=now() WHERE id=$1 RETURNING *`, [id]); return result.rowCount ? { data: result.rows[0] } : { error: 'NOTIFICATION_NOT_FOUND' } }
