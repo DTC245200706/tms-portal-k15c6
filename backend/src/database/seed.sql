@@ -42,6 +42,17 @@ VALUES
 ('student@tms.edu.vn','$argon2id$v=19$m=65536,t=3,p=4$gIb7L+z2455mWoBSuRzN0Q$ST5zFDvRecEkGEt88ZdIUUpR3vwZwayBzfpmAKf64VM','Nguyễn Minh Anh','ACTIVE'),
 ('instructor@tms.edu.vn','$argon2id$v=19$m=65536,t=3,p=4$gIb7L+z2455mWoBSuRzN0Q$ST5zFDvRecEkGEt88ZdIUUpR3vwZwayBzfpmAKf64VM','Nguyễn Hoàng Long','ACTIVE')
 ON CONFLICT (email) DO NOTHING;
+INSERT INTO roles(code,name,description)
+VALUES
+('ADMIN','Quản trị hệ thống','Toàn quyền quản trị và cấu hình hệ thống'),
+('TRAINING_MANAGER','Quản lý đào tạo','Điều hành chương trình, lớp và lịch học'),
+('ADMISSIONS','Tư vấn tuyển sinh','Quản lý lead và pipeline tuyển sinh'),
+('INSTRUCTOR','Giảng viên','Quản lý lớp, điểm danh, bài tập và chấm điểm'),
+('ACCOUNTANT','Kế toán','Quản lý học phí và công nợ'),
+('STUDENT','Học viên','Theo dõi lịch, bài tập và kết quả học tập'),
+('TA','Trợ giảng','Hỗ trợ lớp học và điểm danh'),
+('GUEST','Khách truy cập','Quyền truy cập công khai giới hạn')
+ON CONFLICT (code) DO NOTHING;
 INSERT INTO user_roles(user_id,role_code)
 SELECT u.id, 'ADMIN' FROM users u WHERE u.email='admin@tms.edu.vn'
 ON CONFLICT DO NOTHING;

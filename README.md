@@ -46,7 +46,7 @@ Mỗi branch trong `branches/FE` và `branches/BE` có thư mục source tương
 
 ## Interactive preview
 
-Dashboard hiện hỗ trợ điều hướng theo module, lọc pipeline, đổi góc nhìn RBAC, responsive menu, mở form thao tác nhanh và submit các form demo. Dữ liệu form đang lưu ở phiên client để review UX; khi story BE hoàn thành, thay `api.ts` bằng HTTP client tới endpoint NestJS và thêm persistence PostgreSQL.
+Dashboard hiện hỗ trợ điều hướng theo module, lọc pipeline, đổi góc nhìn RBAC, responsive menu, mở form thao tác nhanh và submit các luồng nghiệp vụ chính qua HTTP tới NestJS. Các thao tác tạo lead, khóa học, lớp, điểm danh, bài tập và sinh lịch đã ghi dữ liệu vào PostgreSQL; sau khi submit, UI mở Record Detail và làm mới dữ liệu liên quan.
 
 ## Audit theo workbook
 

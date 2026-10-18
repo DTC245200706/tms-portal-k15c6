@@ -93,7 +93,8 @@ const roleLabels: Record<Role, string> = {
 
 type DemoAccount = { email: string; password: string; name: string; role: Role }
 const SESSION_TTL_MS = 30 * 60 * 1000
-const API_URL = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '')
+const derivedApiUrl = window.location.hostname.includes('manus.computer') ? `${window.location.protocol}//${window.location.hostname.replace(/^\d+-/, '3001-')}` : 'http://localhost:3001'
+const API_URL = (import.meta.env.VITE_API_URL ?? derivedApiUrl).replace(/\/$/, '')
 const backendRoleMap: Record<string, Role> = { ADMIN: 'Quản trị hệ thống', TRAINING_MANAGER: 'Quản lý đào tạo', ADMISSIONS: 'Tư vấn tuyển sinh', INSTRUCTOR: 'Giảng viên', ACCOUNTANT: 'Kế toán', STUDENT: 'Học viên', TA: 'Trợ giảng', GUEST: 'Khách truy cập' }
 const demoAccounts: DemoAccount[] = [
   { email: 'admin@tms.edu.vn', password: 'Admin@123', name: 'Admin TMS', role: 'Quản trị hệ thống' },
@@ -183,19 +184,28 @@ const actionCopy: Record<Exclude<ActionType, 'quick'>, { title: string; descript
   schedule: { title: 'Sinh lịch theo mẫu', description: 'Tạo chuỗi buổi học theo số buổi, ngày bắt đầu và phòng học.', fields: ['Lớp học', 'Ngày bắt đầu', 'Số buổi', 'Khung giờ / phòng'], submit: 'Sinh lịch' },
 }
 
-function ActionModal({ type, onClose, onSaved, onOpen }: { type: ActionType; onClose: () => void; onSaved: (message: string, detail?: string) => void; onOpen: (type: ActionType) => void }) {
+function ActionModal({ type, onClose, onSaved, onOpen, onPersist }: { type: ActionType; onClose: () => void; onSaved: (message: string, detail?: string) => void; onOpen: (type: ActionType) => void; onPersist: (type: ActionType, values: Record<string, string>) => Promise<void> }) {
   const [values, setValues] = useState<Record<string, string>>({})
-  const save = (event: FormEvent<HTMLFormElement>) => {
+  const [error, setError] = useState('')
+  const [saving, setSaving] = useState(false)
+  const save = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setError('')
+    setSaving(true)
     const config = type === 'quick' ? null : actionCopy[type]
-    const savedAt = new Date().toISOString()
-    window.localStorage.setItem('tms_last_record', JSON.stringify({ type, values, title: config?.title ?? 'Quick Action', savedAt }))
-    onClose()
-    onSaved(config ? `${config.title} đã được lưu thành công.` : 'Đã chọn một tác vụ nhanh cho workspace.', config?.title)
+    try {
+      await onPersist(type, values)
+      const savedAt = new Date().toISOString()
+      window.localStorage.setItem('tms_last_record', JSON.stringify({ type, values, title: config?.title ?? 'Quick Action', savedAt }))
+      onClose()
+      onSaved(config ? `${config.title} đã được lưu thành công.` : 'Đã chọn một tác vụ nhanh cho workspace.', config?.title)
+    } catch (saveError) {
+      setError(saveError instanceof Error ? saveError.message : 'Không thể lưu dữ liệu vào Backend PostgreSQL')
+    } finally { setSaving(false) }
   }
   if (type === 'quick') return <div className="modal-backdrop" onMouseDown={onClose}><div className="action-modal quick-modal" onMouseDown={(event) => event.stopPropagation()}><div className="modal-heading"><div><p className="eyebrow">QUICK ACTIONS</p><h2>Chọn việc cần làm</h2><p>Mở đúng form thay vì chỉ xem thông báo.</p></div><button className="icon-button" onClick={onClose}><X size={18} /></button></div><div className="quick-actions"><button onClick={() => onOpen('lead')}><Target size={17} /><span><strong>Tạo lead</strong><small>Thêm tín hiệu vào pipeline</small></span><ArrowUpRight size={14} /></button><button onClick={() => onOpen('course')}><BookOpen size={17} /><span><strong>Tạo khóa học</strong><small>Khai báo môn học trong catalogue</small></span><ArrowUpRight size={14} /></button><button onClick={() => onOpen('class')}><BriefcaseBusiness size={17} /><span><strong>Mở lớp</strong><small>Khởi tạo từ chương trình</small></span><ArrowUpRight size={14} /></button><button onClick={() => onOpen('attendance')}><ClipboardCheck size={17} /><span><strong>Điểm danh</strong><small>Mở bảng điểm danh hôm nay</small></span><ArrowUpRight size={14} /></button><button onClick={() => onOpen('assignment')}><FileText size={17} /><span><strong>Tạo bài tập</strong><small>Giao bài và đặt hạn nộp</small></span><ArrowUpRight size={14} /></button><button onClick={() => onOpen('schedule')}><CalendarDays size={17} /><span><strong>Sinh lịch theo mẫu</strong><small>Tạo chuỗi buổi học tự động</small></span><ArrowUpRight size={14} /></button><button onClick={() => onSaved('Thông báo đã được đưa vào hàng đợi gửi cho lớp pilot.')}><Bell size={17} /><span><strong>Gửi thông báo</strong><small>Chạm tới một nhóm học viên</small></span><ArrowUpRight size={14} /></button></div></div></div>
   const config = actionCopy[type]
-  return <div className="modal-backdrop" onMouseDown={onClose}><form className="action-modal" onSubmit={save} onMouseDown={(event) => event.stopPropagation()}><div className="modal-heading"><div><p className="eyebrow">INTERACTIVE DEMO</p><h2>{config.title}</h2><p>{config.description}</p></div><button type="button" className="icon-button" onClick={onClose}><X size={18} /></button></div><div className="modal-fields">{config.fields.map((field, index) => <label key={field}>{field}<input required value={values[field] ?? ''} onChange={(event) => setValues({ ...values, [field]: event.target.value })} placeholder={index === 0 ? 'Nhập thông tin...' : 'Chọn hoặc nhập giá trị'} /></label>)}</div><div className="modal-actions"><button type="button" className="button button-ghost" onClick={onClose}>Hủy</button><button type="submit" className="button button-dark"><Check size={15} />{config.submit}</button></div></form></div>
+  return <div className="modal-backdrop" onMouseDown={onClose}><form className="action-modal" onSubmit={save} onMouseDown={(event) => event.stopPropagation()}><div className="modal-heading"><div><p className="eyebrow">INTERACTIVE DEMO</p><h2>{config.title}</h2><p>{config.description}</p></div><button type="button" className="icon-button" onClick={onClose}><X size={18} /></button></div><div className="modal-fields">{config.fields.map((field, index) => <label key={field}>{field}<input required value={values[field] ?? ''} onChange={(event) => setValues({ ...values, [field]: event.target.value })} placeholder={index === 0 ? 'Nhập thông tin...' : 'Chọn hoặc nhập giá trị'} /></label>)}</div>{error && <p className="form-error">{error}</p>}<div className="modal-actions"><button type="button" className="button button-ghost" onClick={onClose}>Hủy</button><button type="submit" className="button button-dark" disabled={saving}><Check size={15} />{saving ? 'Đang lưu...' : config.submit}</button></div></form></div>
 }
 
 function RecordDrawer({ title, onClose, onToast }: { title: string; onClose: () => void; onToast: (text: string) => void }) {
@@ -455,7 +465,18 @@ export default function App() {
         <header className="topbar"><button className="mobile-menu icon-button" onClick={() => setMobileOpen(true)}><Menu size={20} /></button><div className="breadcrumb"><span>TMS Portal</span><b>/</b><strong>{activeLabel}</strong></div><div className="topbar-actions"><div className="global-search"><Search size={16} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Tìm nhanh mọi thứ..." /><kbd>⌘ K</kbd></div><button className="notification-button" onClick={() => showToast('Bạn có 4 thông báo chưa đọc.')}><Bell size={19} /><i>4</i></button><div className="role-switcher"><button className="user-menu" onClick={() => setRoleOpen((open) => !open)}><span className="avatar avatar-mint">LT</span><span><strong>Linh Trần</strong><small>{roleLabels[role]}</small></span><ChevronDown size={15} /></button>{roleOpen && <div className="role-menu"><p>Góc nhìn demo</p>{(Object.keys(roleLabels) as Role[]).filter((option) => option !== 'Khách truy cập').map((option) => <button className={option === role ? 'selected' : ''} key={option} onClick={() => changeRole(option)}><span className="role-menu-dot" />{option}{option === role && <Check size={14} />}</button>)}<button className="role-menu-logout" onClick={() => { window.sessionStorage.clear(); setRoleOpen(false); setAuthenticated(false); }}>Đăng xuất</button></div>}</div></div></header>
         <div className="main-content">{renderView()}</div>
       </main>
-      {action && <ActionModal type={action} onClose={() => setAction(null)} onOpen={(next) => setAction(next)} onSaved={(message, detail) => { setAction(null); if (detail) setRecordDetail(`Đã mở chi tiết ${detail}.`); showToast(message) }} />}
+      {action && <ActionModal type={action} onClose={() => setAction(null)} onOpen={(next) => setAction(next)} onPersist={async (type, values) => {
+        if (!['assignment', 'schedule', 'attendance'].includes(type)) return
+        const headers = { 'content-type': 'application/json' }
+        let endpoint = ''
+        let payload: Record<string, unknown> = {}
+        if (type === 'assignment') { endpoint = '/api/v1/assignments'; payload = { title: values['Tên bài tập'], classCode: values['Lớp học'], dueAt: values['Hạn nộp'], maxScore: 100 } }
+        if (type === 'schedule') { const [time, roomCode] = (values['Khung giờ / phòng'] ?? '').split('/').map((part) => part.trim()); endpoint = '/api/v1/schedule/generate'; payload = { classCode: values['Lớp học'], startDate: values['Ngày bắt đầu'], sessionsCount: Number(values['Số buổi']), time, roomCode } }
+        if (type === 'attendance') { endpoint = '/api/v1/attendance'; payload = { classCode: values['Lớp học'], sessionDate: values['Buổi học'], status: values['Trạng thái mặc định'], note: values['Ghi chú ngoại lệ'] } }
+        const response = await fetch(`${API_URL}${endpoint}`, { method: 'POST', headers, body: JSON.stringify(payload) })
+        const data = await response.json().catch(() => ({}))
+        if (!response.ok || data.error) throw new Error(data.message ?? 'Backend không thể lưu bản ghi')
+      }} onSaved={(message, detail) => { setAction(null); if (detail) setRecordDetail(`Đã mở chi tiết ${detail}.`); showToast(message) }} />}
       {recordDetail && <RecordDrawer title={recordDetail} onClose={() => setRecordDetail('')} onToast={showToast} />}
       {toast && <div className="toast"><span><Check size={15} /></span>{toast}<button onClick={() => setToast('')}><X size={14} /></button></div>}
     </div>

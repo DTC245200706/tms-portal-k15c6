@@ -6,7 +6,11 @@ import { join } from 'node:path'
 @Injectable()
 export class DatabaseService implements OnModuleInit, OnModuleDestroy {
   private readonly logger = new Logger(DatabaseService.name)
-  readonly pool = new Pool({ connectionString: process.env.DATABASE_URL, max: Number(process.env.DB_POOL_MAX ?? 20) })
+  readonly pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    max: Number(process.env.DB_POOL_MAX ?? 20),
+    ssl: process.env.DB_SSL === 'true' || /sslmode=require|ssl=true/i.test(process.env.DATABASE_URL ?? '') ? { rejectUnauthorized: false } : undefined,
+  })
 
   async onModuleInit() {
     if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is required for production backend')
