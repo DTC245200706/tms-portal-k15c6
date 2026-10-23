@@ -5,6 +5,10 @@ import { JwtModule } from '@nestjs/jwt'
 import { AuthController } from './auth/auth.controller'
 import { AuthService } from './auth/auth.service'
 import { DatabaseService } from './database/database.service'
+import { DatabaseModule } from './database/database.module'
+import { S301BeLeadFunnelModule } from './modules/S3-01-be-lead-funnel/module'
+import { S302BeLeadFollowUpModule } from './modules/S3-02-be-lead-follow-up/module'
+import { S303BeLeadConversionModule } from './modules/S3-03-be-lead-conversion/module'
 
 @Controller()
 class HealthController {
@@ -14,5 +18,5 @@ class HealthController {
   }
 }
 
-@Module({ imports: [JwtModule.register({ secret: process.env.JWT_ACCESS_SECRET ?? 'tms-dev-secret-change-me' })], controllers: [HealthController, PilotController, AuthController], providers: [AuthService, DatabaseService] })
+@Module({ imports: [DatabaseModule, JwtModule.register({ secret: process.env.JWT_ACCESS_SECRET ?? 'tms-dev-secret-change-me' }), S301BeLeadFunnelModule, S302BeLeadFollowUpModule, S303BeLeadConversionModule], controllers: [HealthController, PilotController, AuthController], providers: [AuthService] })
 export class AppModule {}
