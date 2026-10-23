@@ -93,7 +93,8 @@ const roleLabels: Record<Role, string> = {
 
 type DemoAccount = { email: string; password: string; name: string; role: Role }
 const SESSION_TTL_MS = 30 * 60 * 1000
-const API_URL = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '')
+const derivedApiUrl = window.location.hostname.includes('manus.computer') ? `${window.location.protocol}//${window.location.hostname.replace(/^\d+-/, '3001-')}` : 'http://localhost:3001'
+const API_URL = (import.meta.env.VITE_API_URL ?? derivedApiUrl).replace(/\/$/, '')
 const backendRoleMap: Record<string, Role> = { ADMIN: 'Quản trị hệ thống', TRAINING_MANAGER: 'Quản lý đào tạo', ADMISSIONS: 'Tư vấn tuyển sinh', INSTRUCTOR: 'Giảng viên', ACCOUNTANT: 'Kế toán', STUDENT: 'Học viên', TA: 'Trợ giảng', GUEST: 'Khách truy cập' }
 const demoAccounts: DemoAccount[] = [
   { email: 'admin@tms.edu.vn', password: 'Admin@123', name: 'Admin TMS', role: 'Quản trị hệ thống' },
@@ -110,6 +111,8 @@ const leads: Lead[] = [
   { name: 'Trần Gia Huy', program: 'Data Analyst', source: 'Landing page', owner: 'Minh Phạm', age: '1 giờ', status: 'Đang tư vấn', tone: 'violet' },
   { name: 'Lê Hoàng Yến', program: 'Full-stack K15', source: 'Giới thiệu', owner: 'Linh Trần', age: '3 giờ', status: 'Hẹn học thử', tone: 'yellow' },
   { name: 'Phạm Quốc Bảo', program: 'UI/UX Foundation', source: 'Google', owner: 'Minh Phạm', age: 'Hôm qua', status: 'Đã liên hệ', tone: 'mint' },
+  { name: 'Vũ Khánh Linh', program: 'Product Management', source: 'Workshop tháng 10', owner: 'Minh Phạm', age: 'Hôm qua', status: 'Mới', tone: 'blue' },
+  { name: 'Đỗ Đức Anh', program: 'Full-stack K15', source: 'Zalo OA', owner: 'Linh Trần', age: '2 ngày', status: 'Đã liên hệ', tone: 'mint' },
 ]
 
 const classRows: ClassRow[] = [
@@ -117,18 +120,21 @@ const classRows: ClassRow[] = [
   { code: 'DA-K02', name: 'Data Analyst Foundation', instructor: 'Trần Minh Quân', progress: 42, students: '18 / 24', status: 'Đang học', tone: 'mint' },
   { code: 'UX-K08', name: 'UI/UX Product Design', instructor: 'Phạm Ngọc Hà', progress: 16, students: '21 / 25', status: 'Chuẩn bị', tone: 'yellow' },
   { code: 'FS-K14C4', name: 'Full-stack Web Developer', instructor: 'Lê Anh Tuấn', progress: 100, students: '26 / 26', status: 'Kết thúc', tone: 'blue' },
+  { code: 'PM-K03', name: 'Product Management Essentials', instructor: 'Nguyễn Thảo Vy', progress: 8, students: '15 / 20', status: 'Chuẩn bị', tone: 'violet' },
 ]
 
 const sessions = [
   { time: '08:30', title: 'React State & Data Flow', className: 'FS-K15C6', room: 'Lab 03', person: 'Nguyễn Hoàng Long', tone: 'violet' as StatusTone },
   { time: '13:30', title: 'SQL Window Functions', className: 'DA-K02', room: 'Phòng 204', person: 'Trần Minh Quân', tone: 'mint' as StatusTone },
   { time: '18:30', title: 'Design System Workshop', className: 'UX-K08', room: 'Online · Zoom', person: 'Phạm Ngọc Hà', tone: 'yellow' as StatusTone },
+  { time: '19:00', title: 'Product Discovery Sprint', className: 'PM-K03', room: 'Phòng 301', person: 'Nguyễn Thảo Vy', tone: 'blue' as StatusTone },
 ]
 
 const tasks = [
   { title: 'Chấm bài Sprint 04', detail: 'FS-K15C6 · 7 bài chưa chấm', due: 'Hôm nay, 17:00', tone: 'coral' as StatusTone },
   { title: 'Duyệt đơn xin vắng', detail: '3 đơn chờ xử lý', due: 'Cần xử lý', tone: 'yellow' as StatusTone },
   { title: 'Gửi lịch khai giảng', detail: 'UX-K08 · 25 học viên', due: 'Ngày mai', tone: 'mint' as StatusTone },
+  { title: 'Xác nhận phòng học PM-K03', detail: 'Phòng 301 · 15 học viên', due: 'Ngày mai', tone: 'violet' as StatusTone },
 ]
 
 const attendanceRows = [
@@ -136,12 +142,14 @@ const attendanceRows = [
   { name: 'Trần Gia Huy', code: 'HV-24042', sessions: '11 / 15', rate: 73, flag: 'Theo dõi', tone: 'yellow' as StatusTone },
   { name: 'Phạm Quốc Bảo', code: 'HV-24018', sessions: '9 / 15', rate: 60, flag: 'Rủi ro cao', tone: 'coral' as StatusTone },
   { name: 'Lê Hoàng Yến', code: 'HV-24037', sessions: '15 / 15', rate: 100, flag: 'Ổn định', tone: 'mint' as StatusTone },
+  { name: 'Vũ Khánh Linh', code: 'HV-24051', sessions: '12 / 15', rate: 80, flag: 'Theo dõi', tone: 'yellow' as StatusTone },
 ]
 
 const invoices = [
   { name: 'Nguyễn Minh Anh', className: 'FS-K15C6', amount: '18.500.000 đ', paid: '12.000.000 đ', due: '6.500.000 đ', status: 'Còn 2 ngày', tone: 'yellow' as StatusTone },
   { name: 'Trần Gia Huy', className: 'DA-K02', amount: '16.000.000 đ', paid: '16.000.000 đ', due: '0 đ', status: 'Đã hoàn tất', tone: 'mint' as StatusTone },
   { name: 'Phạm Quốc Bảo', className: 'FS-K15C6', amount: '18.500.000 đ', paid: '6.000.000 đ', due: '12.500.000 đ', status: 'Quá hạn 4 ngày', tone: 'coral' as StatusTone },
+  { name: 'Vũ Khánh Linh', className: 'PM-K03', amount: '14.000.000 đ', paid: '7.000.000 đ', due: '7.000.000 đ', status: 'Còn 7 ngày', tone: 'violet' as StatusTone },
 ]
 
 const formatCurrency = (value: number) => `${new Intl.NumberFormat('vi-VN').format(value)} đ`
@@ -163,33 +171,52 @@ function MiniSparkline({ color = 'mint', down = false }: { color?: StatusTone; d
   return <div className={`mini-sparkline ${color} ${down ? 'down' : ''}`} aria-hidden="true"><span /><span /><span /><span /><span /><span /><span /></div>
 }
 
-type ActionType = 'quick' | 'lead' | 'course' | 'class' | 'attendance' | 'assignment' | 'payment' | 'account'
+type ActionType = 'quick' | 'lead' | 'course' | 'class' | 'attendance' | 'assignment' | 'payment' | 'account' | 'schedule' | 'notification'
 
 const actionCopy: Record<Exclude<ActionType, 'quick'>, { title: string; description: string; fields: string[]; submit: string }> = {
   lead: { title: 'Tạo lead mới', description: 'Thêm một tín hiệu tuyển sinh vào pipeline để đội tư vấn tiếp tục chăm sóc.', fields: ['Họ và tên', 'Số điện thoại', 'Chương trình quan tâm'], submit: 'Tạo lead' },
   course: { title: 'Tạo khóa học', description: 'Khai báo môn học dùng lại trong nhiều chương trình đào tạo.', fields: ['Mã khóa học', 'Tên khóa học', 'Số buổi học', 'Trọng số điểm'], submit: 'Tạo khóa học' },
   class: { title: 'Mở lớp mới', description: 'Khởi tạo lớp từ catalogue chương trình và gán giảng viên phụ trách.', fields: ['Mã lớp', 'Chương trình', 'Giảng viên phụ trách'], submit: 'Mở lớp' },
-  attendance: { title: 'Điểm danh buổi học', description: 'Cập nhật nhanh trạng thái tham dự cho lớp đang diễn ra.', fields: ['Lớp học', 'Buổi học', 'Ghi chú ngoại lệ'], submit: 'Lưu điểm danh' },
+  notification: { title: 'Gửi thông báo', description: 'Gửi một thông báo tới toàn bộ tài khoản đang hoạt động trong workspace.', fields: ['Tiêu đề thông báo', 'Nội dung thông báo'], submit: 'Gửi thông báo' },
+  attendance: { title: 'Điểm danh buổi học', description: 'Cập nhật trạng thái từng học viên cho lớp đang diễn ra và ghi nhận ngoại lệ.', fields: ['Lớp học', 'Buổi học', 'Trạng thái mặc định', 'Ghi chú ngoại lệ'], submit: 'Lưu điểm danh' },
   assignment: { title: 'Tạo bài tập', description: 'Giao một bài tập mới và đặt hạn nộp cho học viên.', fields: ['Tên bài tập', 'Lớp học', 'Hạn nộp'], submit: 'Tạo bài tập' },
   payment: { title: 'Ghi nhận thanh toán', description: 'Lưu khoản thu vào sổ công nợ và phát hành biên lai.', fields: ['Học viên', 'Số tiền', 'Phương thức thanh toán'], submit: 'Ghi nhận khoản thu' },
   account: { title: 'Thêm tài khoản', description: 'Tạo tài khoản và gán vai trò theo nguyên tắc RBAC.', fields: ['Họ và tên', 'Email công việc', 'Vai trò'], submit: 'Tạo tài khoản' },
+  schedule: { title: 'Sinh lịch theo mẫu', description: 'Tạo chuỗi buổi học theo số buổi, ngày bắt đầu và phòng học.', fields: ['Lớp học', 'Ngày bắt đầu', 'Số buổi', 'Khung giờ / phòng'], submit: 'Sinh lịch' },
 }
 
-function ActionModal({ type, onClose, onSaved, onOpen }: { type: ActionType; onClose: () => void; onSaved: (message: string) => void; onOpen: (type: ActionType) => void }) {
+function ActionModal({ type, onClose, onSaved, onOpen, onPersist }: { type: ActionType; onClose: () => void; onSaved: (message: string, detail?: string) => void; onOpen: (type: ActionType) => void; onPersist: (type: ActionType, values: Record<string, string>) => Promise<void> }) {
   const [values, setValues] = useState<Record<string, string>>({})
-  const save = (event: FormEvent<HTMLFormElement>) => {
+  const [error, setError] = useState('')
+  const [saving, setSaving] = useState(false)
+  const save = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setError('')
+    setSaving(true)
     const config = type === 'quick' ? null : actionCopy[type]
-    onClose()
-    onSaved(config ? `${config.title} đã được lưu vào phiên demo.` : 'Đã chọn một tác vụ nhanh cho workspace.')
+    try {
+      await onPersist(type, values)
+      const savedAt = new Date().toISOString()
+      window.localStorage.setItem('tms_last_record', JSON.stringify({ type, values, title: config?.title ?? 'Quick Action', savedAt }))
+      onClose()
+      onSaved(config ? `${config.title} đã được lưu thành công.` : 'Đã chọn một tác vụ nhanh cho workspace.', config?.title)
+    } catch (saveError) {
+      setError(saveError instanceof Error ? saveError.message : 'Không thể lưu dữ liệu vào Backend PostgreSQL')
+    } finally { setSaving(false) }
   }
-  if (type === 'quick') return <div className="modal-backdrop" onMouseDown={onClose}><div className="action-modal quick-modal" onMouseDown={(event) => event.stopPropagation()}><div className="modal-heading"><div><p className="eyebrow">QUICK ACTIONS</p><h2>Chọn việc cần làm</h2><p>Mở đúng form thay vì chỉ xem thông báo.</p></div><button className="icon-button" onClick={onClose}><X size={18} /></button></div><div className="quick-actions"><button onClick={() => onOpen('lead')}><Target size={17} /><span><strong>Tạo lead</strong><small>Thêm tín hiệu vào pipeline</small></span><ArrowUpRight size={14} /></button><button onClick={() => onOpen('course')}><BookOpen size={17} /><span><strong>Tạo khóa học</strong><small>Khai báo môn học trong catalogue</small></span><ArrowUpRight size={14} /></button><button onClick={() => onOpen('class')}><BriefcaseBusiness size={17} /><span><strong>Mở lớp</strong><small>Khởi tạo từ chương trình</small></span><ArrowUpRight size={14} /></button><button onClick={() => onOpen('attendance')}><ClipboardCheck size={17} /><span><strong>Điểm danh</strong><small>Mở bảng điểm danh hôm nay</small></span><ArrowUpRight size={14} /></button><button onClick={() => onSaved('Thông báo đã được đưa vào hàng đợi gửi cho lớp pilot.')}><Bell size={17} /><span><strong>Gửi thông báo</strong><small>Chạm tới một nhóm học viên</small></span><ArrowUpRight size={14} /></button></div></div></div>
+  if (type === 'quick') return <div className="modal-backdrop" onMouseDown={onClose}><div className="action-modal quick-modal" onMouseDown={(event) => event.stopPropagation()}><div className="modal-heading"><div><p className="eyebrow">QUICK ACTIONS</p><h2>Chọn việc cần làm</h2><p>Mở đúng form thay vì chỉ xem thông báo.</p></div><button className="icon-button" onClick={onClose}><X size={18} /></button></div><div className="quick-actions"><button onClick={() => onOpen('lead')}><Target size={17} /><span><strong>Tạo lead</strong><small>Thêm tín hiệu vào pipeline</small></span><ArrowUpRight size={14} /></button><button onClick={() => onOpen('course')}><BookOpen size={17} /><span><strong>Tạo khóa học</strong><small>Khai báo môn học trong catalogue</small></span><ArrowUpRight size={14} /></button><button onClick={() => onOpen('class')}><BriefcaseBusiness size={17} /><span><strong>Mở lớp</strong><small>Khởi tạo từ chương trình</small></span><ArrowUpRight size={14} /></button><button onClick={() => onOpen('attendance')}><ClipboardCheck size={17} /><span><strong>Điểm danh</strong><small>Mở bảng điểm danh hôm nay</small></span><ArrowUpRight size={14} /></button><button onClick={() => onOpen('assignment')}><FileText size={17} /><span><strong>Tạo bài tập</strong><small>Giao bài và đặt hạn nộp</small></span><ArrowUpRight size={14} /></button><button onClick={() => onOpen('schedule')}><CalendarDays size={17} /><span><strong>Sinh lịch theo mẫu</strong><small>Tạo chuỗi buổi học tự động</small></span><ArrowUpRight size={14} /></button><button onClick={() => onOpen('notification')}><Bell size={17} /><span><strong>Gửi thông báo</strong><small>Chạm tới một nhóm học viên</small></span><ArrowUpRight size={14} /></button></div></div></div>
   const config = actionCopy[type]
-  return <div className="modal-backdrop" onMouseDown={onClose}><form className="action-modal" onSubmit={save} onMouseDown={(event) => event.stopPropagation()}><div className="modal-heading"><div><p className="eyebrow">INTERACTIVE DEMO</p><h2>{config.title}</h2><p>{config.description}</p></div><button type="button" className="icon-button" onClick={onClose}><X size={18} /></button></div><div className="modal-fields">{config.fields.map((field, index) => <label key={field}>{field}<input required value={values[field] ?? ''} onChange={(event) => setValues({ ...values, [field]: event.target.value })} placeholder={index === 0 ? 'Nhập thông tin...' : 'Chọn hoặc nhập giá trị'} /></label>)}</div><div className="modal-actions"><button type="button" className="button button-ghost" onClick={onClose}>Hủy</button><button type="submit" className="button button-dark"><Check size={15} />{config.submit}</button></div></form></div>
+  return <div className="modal-backdrop" onMouseDown={onClose}><form className="action-modal" onSubmit={save} onMouseDown={(event) => event.stopPropagation()}><div className="modal-heading"><div><p className="eyebrow">WORKFLOW ACTION</p><h2>{config.title}</h2><p>{config.description}</p></div><button type="button" className="icon-button" onClick={onClose}><X size={18} /></button></div><div className="modal-fields">{config.fields.map((field, index) => <label key={field}>{field}{type === 'attendance' && field === 'Trạng thái mặc định' ? <select required value={values[field] ?? 'PRESENT'} onChange={(event) => setValues({ ...values, [field]: event.target.value })}><option value="PRESENT">Có mặt</option><option value="LATE">Đi muộn</option><option value="EXCUSED">Vắng có phép</option><option value="ABSENT">Vắng</option></select> : <input required value={values[field] ?? ''} onChange={(event) => setValues({ ...values, [field]: event.target.value })} placeholder={type === 'attendance' && field === 'Buổi học' ? 'Nhập ngày YYYY-MM-DD hoặc số buổi (ví dụ: 2)' : index === 0 ? 'Nhập thông tin...' : 'Chọn hoặc nhập giá trị'} />}</label>)}</div>{error && <p className="form-error">{error}</p>}<div className="modal-actions"><button type="button" className="button button-ghost" onClick={onClose}>Hủy</button><button type="submit" className="button button-dark" disabled={saving}><Check size={15} />{saving ? 'Đang lưu...' : config.submit}</button></div></form></div>
 }
 
-function RecordDrawer({ title, onClose, onToast }: { title: string; onClose: () => void; onToast: (text: string) => void }) {
-  return <div className="drawer-backdrop" onMouseDown={onClose}><aside className="record-drawer" onMouseDown={(event) => event.stopPropagation()}><div className="drawer-header"><div><p className="eyebrow">RECORD DETAIL</p><h2>{title.replace('Đã mở chi tiết ', '').replace('.', '')}</h2><p>Chi tiết bản ghi đã được tải từ luồng nghiệp vụ hiện tại.</p></div><button className="icon-button" onClick={onClose}><X size={18} /></button></div><div className="drawer-status"><span className="status-pill mint"><i />Đang đồng bộ</span><small>ID được quản lý bởi PostgreSQL</small></div><div className="drawer-fields"><div><span>Trạng thái</span><strong>Đang xử lý</strong></div><div><span>Người phụ trách</span><strong>Linh Trần</strong></div><div><span>Cập nhật gần nhất</span><strong>Vừa xong</strong></div><div><span>Audit log</span><strong>Đã ghi nhận</strong></div></div><div className="drawer-note"><p className="eyebrow">NEXT ACTION</p><strong>Chọn một thao tác tiếp theo</strong><p>Thay đổi trạng thái, thêm ghi chú hoặc mở luồng liên quan.</p></div><div className="drawer-actions"><button className="button button-ghost" onClick={() => onToast('Đã thêm ghi chú vào bản ghi.')}>Thêm ghi chú</button><button className="button button-dark" onClick={() => onToast('Đã mở luồng chỉnh sửa bản ghi.')}><ArrowUpRight size={15} />Chỉnh sửa</button></div></aside></div>
+function RecordDrawer({ title, onClose, onNote, onEdit }: { title: string; onClose: () => void; onNote: () => void; onEdit: () => void }) {
+  return <div className="drawer-backdrop" onMouseDown={onClose}><aside className="record-drawer" onMouseDown={(event) => event.stopPropagation()}><div className="drawer-header"><div><p className="eyebrow">RECORD DETAIL</p><h2>{title.replace('Đã mở chi tiết ', '').replace('.', '')}</h2><p>Chi tiết bản ghi đã được tải từ luồng nghiệp vụ hiện tại.</p></div><button className="icon-button" onClick={onClose}><X size={18} /></button></div><div className="drawer-status"><span className="status-pill mint"><i />Đang đồng bộ</span><small>ID được quản lý bởi PostgreSQL</small></div><div className="drawer-fields"><div><span>Trạng thái</span><strong>Đang xử lý</strong></div><div><span>Người phụ trách</span><strong>Linh Trần</strong></div><div><span>Cập nhật gần nhất</span><strong>Vừa xong</strong></div><div><span>Audit log</span><strong>Đã ghi nhận</strong></div></div><div className="drawer-note"><p className="eyebrow">NEXT ACTION</p><strong>Chọn một thao tác tiếp theo</strong><p>Thay đổi trạng thái, thêm ghi chú hoặc mở luồng liên quan.</p></div><div className="drawer-actions"><button className="button button-ghost" onClick={onNote}>Thêm ghi chú</button><button className="button button-dark" onClick={onEdit}><ArrowUpRight size={15} />Chỉnh sửa</button></div></aside></div>
+}
+
+function RecordActionModal({ title, mode, onClose, onSave }: { title: string; mode: 'note' | 'edit'; onClose: () => void; onSave: (value: string) => void }) {
+  const [value, setValue] = useState('')
+  const isNote = mode === 'note'
+  return <div className="modal-backdrop" onMouseDown={onClose}><form className="action-modal" onSubmit={(event) => { event.preventDefault(); onSave(value) }} onMouseDown={(event) => event.stopPropagation()}><div className="modal-heading"><div><p className="eyebrow">RECORD WORKFLOW</p><h2>{isNote ? 'Thêm ghi chú' : 'Chỉnh sửa bản ghi'}</h2><p>{title.replace('Đã mở chi tiết ', '').replace('.', '')}</p></div><button type="button" className="icon-button" onClick={onClose}><X size={18} /></button></div><div className="modal-fields">{!isNote && <label>Trạng thái<input required value={value} onChange={(event) => setValue(event.target.value)} placeholder="Ví dụ: Đang xử lý" /></label>}{isNote && <label>Nội dung ghi chú<textarea required value={value} onChange={(event) => setValue(event.target.value)} placeholder="Nhập ghi chú cho bản ghi..." rows={4} /></label>}</div><div className="modal-actions"><button type="button" className="button button-ghost" onClick={onClose}>Hủy</button><button type="submit" className="button button-dark"><Check size={15} />{isNote ? 'Lưu ghi chú' : 'Lưu thay đổi'}</button></div></form></div>
 }
 
 function LoginView({ onLogin, notice = '' }: { onLogin: (account: DemoAccount) => void; notice?: string }) {
@@ -304,7 +331,7 @@ function ProgramsView({ onToast }: { onToast: (text: string) => void }) {
 function ScheduleView({ onToast }: { onToast: (text: string) => void }) {
   const dayNames = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']
   return <>
-    <SectionHeading eyebrow="EP-04 · CALENDAR" title="Lịch học" description="Theo dõi các buổi học và điểm chạm cần chuẩn bị trong tuần." action="Sinh lịch theo mẫu" onAction={() => onToast('Đã mở flow sinh lịch lặp cho lớp.')} />
+    <SectionHeading eyebrow="EP-04 · CALENDAR" title="Lịch học" description="Theo dõi các buổi học và điểm chạm cần chuẩn bị trong tuần." action="Sinh lịch theo mẫu" onAction={() => onToast('Đã mở form sinh lịch theo mẫu.')} />
     <div className="calendar-toolbar"><div className="calendar-month"><button className="icon-button" onClick={() => onToast('Đã chuyển về tháng trước.')}><ArrowDownRight size={15} /></button><strong>Tháng 10, 2026</strong><button className="icon-button" onClick={() => onToast('Đã chuyển sang tháng tiếp theo.')}><ArrowUpRight size={15} /></button></div><div className="view-toggle"><button className="active" onClick={() => onToast('Đang xem lịch theo tuần.')}>Tuần</button><button onClick={() => onToast('Đang chuyển sang lịch theo tháng.')}>Tháng</button><button onClick={() => onToast('Đang mở agenda theo danh sách buổi học.')}>Agenda</button></div></div>
     <article className="panel calendar-panel"><div className="week-head">{dayNames.map((day, index) => <div className={index === 0 ? 'today' : ''} key={day}><small>{day}</small><strong>{12 + index}</strong>{index === 0 && <i>Hôm nay</i>}</div>)}</div><div className="calendar-body"><div className="calendar-times"><span>08:00</span><span>10:00</span><span>12:00</span><span>14:00</span><span>16:00</span><span>18:00</span><span>20:00</span></div><div className="calendar-columns">{dayNames.map((day, index) => <div className="calendar-column" key={day}>{index === 0 && <div className="calendar-event violet-event" style={{ top: 21 }}><strong>React State</strong><small>FS-K15C6 · Lab 03</small></div>}{index === 1 && <div className="calendar-event mint-event" style={{ top: 194 }}><strong>SQL Window</strong><small>DA-K02 · Phòng 204</small></div>}{index === 2 && <div className="calendar-event yellow-event" style={{ top: 366 }}><strong>Design System</strong><small>UX-K08 · Zoom</small></div>}{index === 4 && <div className="calendar-event coral-event" style={{ top: 280 }}><strong>Mentor hour</strong><small>FS-K15C6 · Lab 01</small></div>}</div>)}</div></div></article>
   </>
@@ -312,7 +339,7 @@ function ScheduleView({ onToast }: { onToast: (text: string) => void }) {
 
 function AttendanceView({ onToast }: { onToast: (text: string) => void }) {
   return <>
-    <SectionHeading eyebrow="EP-05 · ATTENDANCE" title="Điểm danh & chuyên cần" description="Chỉ số rủi ro được đưa lên trước để đội đào tạo can thiệp đúng lúc." action="Điểm danh buổi hôm nay" onAction={() => onToast('Đã mở bảng điểm danh FS-K15C6.')} />
+    <SectionHeading eyebrow="EP-05 · ATTENDANCE" title="Điểm danh & chuyên cần" description="Chỉ số rủi ro được đưa lên trước để đội đào tạo can thiệp đúng lúc." action="Điểm danh buổi hôm nay" onAction={() => onToast('Đã mở form điểm danh FS-K15C6.')} />
     <div className="attendance-highlight"><div><span className="eyebrow">FS-K15C6 · BUỔI 15 / 60</span><h2>React State & Data Flow</h2><p>Hôm nay, 08:30 — Lab 03 · Nguyễn Hoàng Long</p></div><div className="attendance-score"><strong>92,4%</strong><span>chuyên cần trung bình</span></div><button className="button button-mint" onClick={() => onToast('Đã đánh dấu tất cả có mặt, bạn có thể chỉnh ngoại lệ.')}>Đánh dấu tất cả có mặt <Check size={16} /></button></div>
     <article className="panel table-panel"><div className="panel-heading"><div><p className="eyebrow">RISK RADAR</p><h3>Học viên cần chú ý</h3></div><div className="panel-tools"><button className="button button-ghost" onClick={() => onToast('Đã mở bộ lọc lớp: FS-K15C6.')}><ListFilter size={15} />FS-K15C6</button><button className="icon-button" onClick={() => onToast('Đã mở menu thao tác của bảng.')}><MoreHorizontal size={18} /></button></div></div><div className="data-table"><div className="table-head attendance-head"><span>Học viên</span><span>Đã tham gia</span><span>Chuyên cần</span><span>Cờ rủi ro</span><span /></div>{attendanceRows.map((row) => <div className="table-row attendance-row" key={row.code}><div className="person-cell"><span className="avatar avatar-purple">{row.name.split(' ').slice(-1)[0][0]}</span><span><strong>{row.name}</strong><small>{row.code}</small></span></div><span className="muted-cell">{row.sessions}</span><div className="progress-cell"><div className="progress-track"><i className={row.rate < 70 ? 'danger' : ''} style={{ width: `${row.rate}%` }} /></div><span>{row.rate}%</span></div><StatusPill tone={row.tone}>{row.flag}</StatusPill><button className="icon-button" onClick={() => onToast(`Đã mở chi tiết học viên ${row.name}.`)}><MoreHorizontal size={17} /></button></div>)}</div></article>
   </>
@@ -374,6 +401,7 @@ export default function App() {
   const [search, setSearch] = useState('')
   const [action, setAction] = useState<ActionType | null>(null)
   const [recordDetail, setRecordDetail] = useState('')
+  const [recordAction, setRecordAction] = useState<'note' | 'edit' | null>(null)
   const [overview, setOverview] = useState<OverviewData | null>(null)
 
   useEffect(() => {
@@ -396,7 +424,7 @@ export default function App() {
   const showToast = (message: string) => {
     if (message.startsWith('Đã mở chi tiết')) { setRecordDetail(message); return }
     if (message.includes('Quick action')) { setAction('quick'); return }
-    const actionMatch: [string, ActionType][] = [['form tạo lead', 'lead'], ['flow mở lớp', 'class'], ['bảng điểm danh', 'attendance'], ['form tạo bài tập', 'assignment'], ['form ghi nhận', 'payment'], ['form thêm tài khoản', 'account']]
+    const actionMatch: [string, ActionType][] = [['form tạo lead', 'lead'], ['flow mở lớp', 'class'], ['bảng điểm danh', 'attendance'], ['form tạo bài tập', 'assignment'], ['form sinh lịch', 'schedule'], ['form điểm danh', 'attendance'], ['form ghi nhận', 'payment'], ['form thêm tài khoản', 'account']]
     const matched = actionMatch.find(([needle]) => message.includes(needle))
     if (matched) { setAction(matched[1]); return }
     setToast(message)
@@ -445,8 +473,24 @@ export default function App() {
         <header className="topbar"><button className="mobile-menu icon-button" onClick={() => setMobileOpen(true)}><Menu size={20} /></button><div className="breadcrumb"><span>TMS Portal</span><b>/</b><strong>{activeLabel}</strong></div><div className="topbar-actions"><div className="global-search"><Search size={16} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Tìm nhanh mọi thứ..." /><kbd>⌘ K</kbd></div><button className="notification-button" onClick={() => showToast('Bạn có 4 thông báo chưa đọc.')}><Bell size={19} /><i>4</i></button><div className="role-switcher"><button className="user-menu" onClick={() => setRoleOpen((open) => !open)}><span className="avatar avatar-mint">LT</span><span><strong>Linh Trần</strong><small>{roleLabels[role]}</small></span><ChevronDown size={15} /></button>{roleOpen && <div className="role-menu"><p>Góc nhìn demo</p>{(Object.keys(roleLabels) as Role[]).filter((option) => option !== 'Khách truy cập').map((option) => <button className={option === role ? 'selected' : ''} key={option} onClick={() => changeRole(option)}><span className="role-menu-dot" />{option}{option === role && <Check size={14} />}</button>)}<button className="role-menu-logout" onClick={() => { window.sessionStorage.clear(); setRoleOpen(false); setAuthenticated(false); }}>Đăng xuất</button></div>}</div></div></header>
         <div className="main-content">{renderView()}</div>
       </main>
-      {action && <ActionModal type={action} onClose={() => setAction(null)} onOpen={(next) => setAction(next)} onSaved={(message) => { setAction(null); showToast(message) }} />}
-      {recordDetail && <RecordDrawer title={recordDetail} onClose={() => setRecordDetail('')} onToast={showToast} />}
+      {action && <ActionModal type={action} onClose={() => setAction(null)} onOpen={(next) => setAction(next)} onPersist={async (type, values) => {
+        if (!['lead', 'course', 'class', 'assignment', 'schedule', 'attendance', 'notification'].includes(type)) return
+        const headers = { 'content-type': 'application/json' }
+        let endpoint = ''
+        let payload: Record<string, unknown> = {}
+        if (type === 'lead') { endpoint = '/api/v1/leads'; payload = { name: values['Họ và tên'], phone: values['Số điện thoại'], programCode: values['Chương trình quan tâm'], source: 'Quick Action' } }
+        if (type === 'course') { endpoint = '/api/v1/courses'; payload = { code: values['Mã khóa học'], name: values['Tên khóa học'], sessionsCount: Number(values['Số buổi học']), weight: Number(values['Trọng số điểm']) } }
+        if (type === 'class') { endpoint = '/api/v1/classes'; payload = { code: values['Mã lớp'], programCode: values['Chương trình'], capacity: 25, deliveryMode: 'ONSITE' } }
+        if (type === 'notification') { endpoint = '/api/v1/notifications'; payload = { title: values['Tiêu đề thông báo'], message: values['Nội dung thông báo'] } }
+        if (type === 'assignment') { endpoint = '/api/v1/assignments'; payload = { title: values['Tên bài tập'], classCode: values['Lớp học'], dueAt: values['Hạn nộp'], maxScore: 100 } }
+        if (type === 'schedule') { const [time, roomCode] = (values['Khung giờ / phòng'] ?? '').split('/').map((part) => part.trim()); endpoint = '/api/v1/schedule/generate'; payload = { classCode: values['Lớp học'], startDate: values['Ngày bắt đầu'], sessionsCount: Number(values['Số buổi']), time, roomCode } }
+        if (type === 'attendance') { endpoint = '/api/v1/attendance'; payload = { classCode: values['Lớp học'], sessionDate: values['Buổi học'], status: values['Trạng thái mặc định'], note: values['Ghi chú ngoại lệ'] } }
+        const response = await fetch(`${API_URL}${endpoint}`, { method: 'POST', headers, body: JSON.stringify(payload) })
+        const data = await response.json().catch(() => ({}))
+        if (!response.ok || data.error) throw new Error(data.message ?? 'Backend không thể lưu bản ghi')
+      }} onSaved={(message, detail) => { setAction(null); if (detail) setRecordDetail(`Đã mở chi tiết ${detail}.`); showToast(message) }} />}
+      {recordDetail && <RecordDrawer title={recordDetail} onClose={() => setRecordDetail('')} onNote={() => setRecordAction('note')} onEdit={() => setRecordAction('edit')} />}
+      {recordDetail && recordAction && <RecordActionModal title={recordDetail} mode={recordAction} onClose={() => setRecordAction(null)} onSave={(value) => { window.localStorage.setItem('tms_record_action', JSON.stringify({ title: recordDetail, mode: recordAction, value, savedAt: new Date().toISOString() })); setRecordAction(null); showToast(recordAction === 'note' ? 'Đã lưu ghi chú cho bản ghi.' : 'Đã lưu thay đổi bản ghi.') }} />}
       {toast && <div className="toast"><span><Check size={15} /></span>{toast}<button onClick={() => setToast('')}><X size={14} /></button></div>}
     </div>
   )
