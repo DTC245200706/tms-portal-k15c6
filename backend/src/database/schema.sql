@@ -29,6 +29,8 @@ CREATE TABLE IF NOT EXISTS leads (id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 CREATE INDEX IF NOT EXISTS idx_leads_status_owner ON leads(status, owner_id);
 CREATE TABLE IF NOT EXISTS lead_activities (id UUID PRIMARY KEY DEFAULT gen_random_uuid(), lead_id UUID NOT NULL REFERENCES leads(id) ON DELETE CASCADE, actor_id UUID REFERENCES users(id), activity_type VARCHAR(32) NOT NULL, content TEXT NOT NULL, next_follow_up_at TIMESTAMPTZ, created_at TIMESTAMPTZ NOT NULL DEFAULT now());
 CREATE TABLE IF NOT EXISTS students (id UUID PRIMARY KEY DEFAULT gen_random_uuid(), user_id UUID UNIQUE REFERENCES users(id), student_code VARCHAR(32) UNIQUE NOT NULL, entry_level TEXT, notes TEXT, status VARCHAR(24) NOT NULL DEFAULT 'ACTIVE');
+ALTER TABLE leads ADD COLUMN IF NOT EXISTS converted_student_id UUID REFERENCES students(id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_leads_converted_student ON leads(converted_student_id) WHERE converted_student_id IS NOT NULL;
 
 -- EP-04: classes, rooms, timetable and student lifecycle
 CREATE TABLE IF NOT EXISTS rooms (id UUID PRIMARY KEY DEFAULT gen_random_uuid(), code VARCHAR(32) UNIQUE NOT NULL, name VARCHAR(120) NOT NULL, capacity INTEGER CHECK (capacity > 0), meeting_url TEXT, status VARCHAR(24) NOT NULL DEFAULT 'ACTIVE');

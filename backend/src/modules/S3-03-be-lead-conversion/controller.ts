@@ -1,12 +1,8 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import { Body, Controller, Param, Post } from '@nestjs/common'
 import { S303BeLeadConversionService } from './service'
-
-@Controller('sample/s3-03-be-lead-conversion')
+import { ConvertLeadDto } from './dto'
+@Controller('/api/v1/leads')
 export class S303BeLeadConversionController {
   constructor(private readonly service: S303BeLeadConversionService) {}
-
-  @Post('execute')
-  execute(@Body() payload: Record<string, unknown>) {
-    return this.service.execute(payload)
-  }
+  @Post(':leadId/convert') convert(@Param('leadId') leadId: string, @Body() dto: ConvertLeadDto) { return this.service.convert(leadId, dto) }
 }
