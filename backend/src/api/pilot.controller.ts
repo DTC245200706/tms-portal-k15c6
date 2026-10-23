@@ -99,11 +99,15 @@ export class PilotController {
 
   @Post('/attendance')
   async createAttendance(@Body() body: { sessionId?: string; classCode?: string; sessionDate?: string; status?: string; note?: string }) {
+    const normalizedStatus = ({ 'có mặt': 'PRESENT', 'present': 'PRESENT', 'đi muộn': 'LATE', 'late': 'LATE', 'vắng có phép': 'EXCUSED', 'excused': 'EXCUSED', 'vắng': 'ABSENT', 'absent': 'ABSENT' } as Record<string, string>)[(body.status ?? 'PRESENT').trim().toLowerCase()]
+    if (!normalizedStatus) return { error: 'INVALID_ATTENDANCE_STATUS', message: 'Trạng thái phải là Có mặt, Đi muộn, Vắng có phép hoặc Vắng' }
     const session = body.sessionId
       ? await this.db.query<{ id: string; classId: string }>(`SELECT id, class_id AS "classId" FROM class_sessions WHERE id=$1`, [body.sessionId])
-      : await this.db.query<{ id: string; classId: string }>(`SELECT cs.id, cs.class_id AS "classId" FROM class_sessions cs JOIN classes c ON c.id=cs.class_id WHERE c.code=$1 AND ($2::date IS NULL OR cs.starts_at::date=$2::date) ORDER BY cs.starts_at DESC LIMIT 1`, [body.classCode ?? null, body.sessionDate ?? null])
+      : /^\d+$/.test((body.sessionDate ?? '').trim())
+        ? await this.db.query<{ id: string; classId: string }>(`SELECT cs.id, cs.class_id AS "classId" FROM class_sessions cs JOIN classes c ON c.id=cs.class_id WHERE c.code=$1 ORDER BY cs.starts_at ASC OFFSET GREATEST($2::int - 1, 0) LIMIT 1`, [body.classCode ?? null, Number(body.sessionDate)])
+        : await this.db.query<{ id: string; classId: string }>(`SELECT cs.id, cs.class_id AS "classId" FROM class_sessions cs JOIN classes c ON c.id=cs.class_id WHERE c.code=$1 AND ($2::date IS NULL OR cs.starts_at::date=$2::date) ORDER BY cs.starts_at DESC LIMIT 1`, [body.classCode ?? null, body.sessionDate || null])
     if (!session.rowCount) return { error: 'SESSION_NOT_FOUND', message: 'Không tìm thấy buổi học để điểm danh' }
-    const result = await this.db.query(`INSERT INTO attendance_records(session_id,student_id,status,note,marked_at) SELECT $1,e.student_id,$2,$3,now() FROM enrollments e WHERE e.class_id=$4 ON CONFLICT(session_id,student_id) DO UPDATE SET status=EXCLUDED.status,note=EXCLUDED.note,marked_at=now() RETURNING id,student_id,status,note`, [session.rows[0].id, body.status ?? 'PRESENT', body.note ?? null, session.rows[0].classId])
+    const result = await this.db.query(`INSERT INTO attendance_records(session_id,student_id,status,note,marked_at) SELECT $1,e.student_id,$2,$3,now() FROM enrollments e WHERE e.class_id=$4 ON CONFLICT(session_id,student_id) DO UPDATE SET status=EXCLUDED.status,note=EXCLUDED.note,marked_at=now() RETURNING id,student_id,status,note`, [session.rows[0].id, normalizedStatus, body.note ?? null, session.rows[0].classId])
     return { message: `Đã lưu điểm danh cho ${result.rowCount} học viên`, sessionId: session.rows[0].id, data: result.rows }
   }
 
