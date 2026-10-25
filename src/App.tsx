@@ -474,7 +474,7 @@ export default function App() {
         <div className="main-content">{renderView()}</div>
       </main>
       {action && <ActionModal type={action} onClose={() => setAction(null)} onOpen={(next) => setAction(next)} onPersist={async (type, values) => {
-        if (!['lead', 'course', 'class', 'assignment', 'schedule', 'attendance', 'notification'].includes(type)) return
+        if (!['lead', 'course', 'class', 'assignment', 'schedule', 'attendance', 'notification', 'payment', 'account'].includes(type)) return
         const headers = { 'content-type': 'application/json' }
         let endpoint = ''
         let payload: Record<string, unknown> = {}
@@ -485,6 +485,8 @@ export default function App() {
         if (type === 'assignment') { endpoint = '/api/v1/assignments'; payload = { title: values['Tên bài tập'], classCode: values['Lớp học'], dueAt: values['Hạn nộp'], maxScore: 100 } }
         if (type === 'schedule') { const [time, roomCode] = (values['Khung giờ / phòng'] ?? '').split('/').map((part) => part.trim()); endpoint = '/api/v1/schedule/generate'; payload = { classCode: values['Lớp học'], startDate: values['Ngày bắt đầu'], sessionsCount: Number(values['Số buổi']), time, roomCode } }
         if (type === 'attendance') { endpoint = '/api/v1/attendance'; payload = { classCode: values['Lớp học'], sessionDate: values['Buổi học'], status: values['Trạng thái mặc định'], note: values['Ghi chú ngoại lệ'] } }
+        if (type === 'payment') { endpoint = '/api/v1/finance/payments'; payload = { student: values['Học viên'], amount: Number(values['Số tiền']), method: values['Phương thức thanh toán'] } }
+        if (type === 'account') { endpoint = '/api/v1/users'; payload = { name: values['Họ và tên'], email: values['Email công việc'], role: values['Vai trò'] } }
         const response = await fetch(`${API_URL}${endpoint}`, { method: 'POST', headers, body: JSON.stringify(payload) })
         const data = await response.json().catch(() => ({}))
         if (!response.ok || data.error) throw new Error(data.message ?? 'Backend không thể lưu bản ghi')

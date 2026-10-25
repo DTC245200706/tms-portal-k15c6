@@ -1,4 +1,6 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common'
+import * as argon2 from 'argon2'
+import { randomUUID } from 'node:crypto'
 import { DatabaseService } from '../database/database.service'
 
 @Controller('/api/v1')
@@ -146,6 +148,43 @@ export class PilotController {
     if (!body.title?.trim() || !body.message?.trim()) return { error: 'INVALID_NOTIFICATION', message: 'Tiêu đề và nội dung thông báo là bắt buộc' }
     const result = await this.db.query(`INSERT INTO notifications(user_id,type,title,body,target_path) SELECT id,'ANNOUNCEMENT',$1,$2,$3 FROM users WHERE status='ACTIVE' RETURNING id`, [body.title.trim(), body.message.trim(), body.targetPath ?? null])
     return { message: `Đã gửi thông báo tới ${result.rowCount} tài khoản`, sent: result.rowCount }
+  }
+
+  @Post('/users')
+  async createUser(@Body() body: { name: string; email: string; role: string }) {
+    if (!body.name?.trim() || !body.email?.trim() || !body.role?.trim()) return { error: 'INVALID_USER', message: 'Họ tên, email và vai trò là bắt buộc' }
+    const roleCode = ({ 'Quản trị hệ thống': 'ADMIN', 'Quản lý đào tạo': 'TRAINING_MANAGER', 'Tư vấn tuyển sinh': 'ADMISSIONS', 'Giảng viên': 'INSTRUCTOR', 'Kế toán': 'ACCOUNTANT', 'Học viên': 'STUDENT', 'Trợ giảng': 'TA', 'Khách truy cập': 'GUEST' } as Record<string, string>)[body.role.trim()] ?? body.role.trim().toUpperCase()
+    const role = await this.db.query(`SELECT code FROM roles WHERE code=$1`, [roleCode])
+    if (!role.rowCount) return { error: 'ROLE_NOT_FOUND', message: `Không tìm thấy vai trò ${body.role}` }
+    const temporaryPassword = 'Welcome@123'
+    try {
+      const user = await this.db.transaction(async (client) => {
+        const created = await client.query(`INSERT INTO users(email,password_hash,full_name,status) VALUES($1,$2,$3,'ACTIVE') RETURNING id,email,full_name AS "name",status`, [body.email.trim().toLowerCase(), await argon2.hash(temporaryPassword), body.name.trim()])
+        await client.query(`INSERT INTO user_roles(user_id,role_code) VALUES($1,$2)`, [created.rows[0].id, roleCode])
+        return created.rows[0]
+      })
+      return { data: user, role: roleCode, temporaryPassword, message: 'Đã tạo tài khoản và gán vai trò' }
+    } catch (error: any) {
+      if (error?.code === '23505') return { error: 'EMAIL_EXISTS', message: 'Email đã tồn tại trong hệ thống' }
+      throw error
+    }
+  }
+
+  @Post('/finance/payments')
+  async createPayment(@Body() body: { student: string; amount: number; method: string }) {
+    const amount = Number(body.amount)
+    if (!body.student?.trim() || !Number.isFinite(amount) || amount <= 0 || !body.method?.trim()) return { error: 'INVALID_PAYMENT', message: 'Học viên, số tiền và phương thức thanh toán là bắt buộc' }
+    const student = await this.db.query<{ id: string }>(`SELECT st.id FROM students st JOIN users u ON u.id=st.user_id WHERE st.student_code=$1 OR u.full_name ILIKE $2 LIMIT 1`, [body.student.trim(), body.student.trim()])
+    if (!student.rowCount) return { error: 'STUDENT_NOT_FOUND', message: `Không tìm thấy học viên ${body.student}` }
+    const activeClass = await this.db.query<{ id: string }>(`SELECT class_id AS id FROM enrollments WHERE student_id=$1 AND lifecycle_status='ACTIVE' ORDER BY enrolled_at DESC LIMIT 1`, [student.rows[0].id])
+    if (!activeClass.rowCount) return { error: 'CLASS_NOT_FOUND', message: 'Học viên chưa có lớp đang học để ghi nhận công nợ' }
+    const data = await this.db.transaction(async (client) => {
+      const plan = await client.query(`INSERT INTO payment_plans(student_id,class_id,gross_amount,net_amount) VALUES($1,$2,$3,$3) RETURNING id`, [student.rows[0].id, activeClass.rows[0].id, amount])
+      const installment = await client.query(`INSERT INTO payment_installments(plan_id,installment_no,due_date,amount,paid_amount,status) VALUES($1,1,current_date,$2,$2,'PAID') RETURNING id`, [plan.rows[0].id, amount])
+      const payment = await client.query(`INSERT INTO payments(installment_id,receipt_no,amount,method) VALUES($1,$2,$3,$4) RETURNING id,receipt_no AS "receiptNo",amount,method,paid_at AS "paidAt"`, [installment.rows[0].id, `RC-${randomUUID().slice(0, 8).toUpperCase()}`, amount, body.method.trim().toUpperCase()])
+      return payment.rows[0]
+    })
+    return { data, message: 'Đã ghi nhận thanh toán và cập nhật công nợ' }
   }
 
   @Patch('/notifications/:id/read')
